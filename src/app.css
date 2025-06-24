@@ -1,3 +1,16 @@
 @import 'tailwindcss';
 @plugin '@tailwindcss/forms';
 @plugin '@tailwindcss/typography';
+
+@font-face {
+	font-family: 'DM Sans';
+	src:
+		local(''),
+		url('/fonts/DMSans-VariableFont_opsz,wght.ttf') format('truetype');
+}
+
+@theme {
+	--font-sans:
+		'DM Sans', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+		Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+}
