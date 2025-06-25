@@ -27,7 +27,13 @@ export async function load() {
 		'SQL',
 		'Assembly',
 		'Shell',
-		'Rust'
+		'Rust',
+		'Solidity',
+		'Ruby',
+		'Docker',
+		'zig',
+		'Julia',
+		'fortran'
 	];
 
 	try {
