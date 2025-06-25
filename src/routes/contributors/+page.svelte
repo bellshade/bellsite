@@ -3,7 +3,7 @@
 </script>
 
 <div class="mx-auto grid grid-cols-3">
-	{#if data.length !== 0}
+	{#if data.members.length > 0 || data.outsideCollaborators.length > 0}
 		{#each data.members as contributor}
 			<div class="flex flex-row items-center justify-center">
 				<a href={contributor.html_url}>

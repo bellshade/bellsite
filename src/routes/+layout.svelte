@@ -53,6 +53,4 @@
 	</div>
 </nav>
 
-<div class="pt-24"></div>
-
 {@render children()}
