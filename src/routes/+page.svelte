@@ -1,5 +1,32 @@
 <script lang="ts">
 	import Button from '../components/Button.svelte';
+
+	let visible = $state(false);
+
+	function typewriter(node: HTMLHeadingElement, { speed = 1 }) {
+		const valid = node.childNodes.length === 1 && node.childNodes[0].nodeType === Node.TEXT_NODE;
+
+		if (!valid) {
+			throw new Error(`This transition only works on elements with a single text node child`);
+		}
+
+		const text = node.textContent;
+		const duration = text!.length / (speed * 0.01);
+
+		return {
+			duration,
+			tick: (t: number) => {
+				const i = Math.trunc(text!.length * t);
+				node.textContent = text!.slice(0, i);
+			}
+		};
+	}
+
+	$effect(() => {
+		setTimeout(() => {
+			visible = true;
+		}, 500);
+	});
 </script>
 
 <div class="relative h-100 overflow-hidden">
@@ -15,7 +42,13 @@
 
 <section class="-translate-y-20">
 	<div class="mx-auto max-w-2xl px-4">
-		<h1 class="mb-8 text-center text-8xl text-gray-900">Bellshade</h1>
+		<div class="mb-8 h-30">
+			{#if visible}
+				<h1 class="text-center text-8xl text-gray-900" transition:typewriter={{ speed: 0.75 }}>
+					Bellshade.
+				</h1>
+			{/if}
+		</div>
 		<div class="w-full border-y border-gray-300 py-8">
 			<h3 class="pb-8 text-xl font-bold">Apa itu Bellshade?</h3>
 			<p class="mt-2 text-gray-600">
