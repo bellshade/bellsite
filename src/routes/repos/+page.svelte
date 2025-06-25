@@ -28,9 +28,7 @@
 				</div>
 				<div class="flex flex-col gap-2">
 					<a
-						href={repo.html_url}
-						target="_blank"
-						rel="noopener noreferrer"
+						href="/repos/{repo.name}"
 						class="block w-full rounded-md border border-zinc-300 bg-zinc-800 p-2 text-center text-sm text-white transition-transform hover:rotate-2"
 						>View in Browser</a
 					>
