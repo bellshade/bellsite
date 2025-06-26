@@ -1,8 +1,22 @@
+import { GITHUB_API_TOKEN } from '$env/static/private';
 import { error } from '@sveltejs/kit';
 
 type GithubContent = {
 	sha: string;
 };
+
+type GithubTree = {
+	url: string;
+	tree: {
+		path: string;
+		sha: string;
+		type: 'blob' | 'tree';
+	}[];
+};
+
+export type MappedTree = { [key: string]: MappedTree | null };
+
+export const prerender = true;
 
 export async function load({ params }: { params: { name: string } }) {
 	try {
@@ -10,7 +24,8 @@ export async function load({ params }: { params: { name: string } }) {
 			`https://api.github.com/repos/bellshade/${params.name}/contents/`,
 			{
 				headers: {
-					Accept: 'application/vnd.github.object+json'
+					Accept: 'application/vnd.github.object+json',
+					Authorization: `Bearer ${GITHUB_API_TOKEN}`
 				}
 			}
 		);
@@ -26,11 +41,12 @@ export async function load({ params }: { params: { name: string } }) {
 			`https://api.github.com/repos/bellshade/${params.name}/git/trees/${json.sha}?recursive=1`,
 			{
 				headers: {
-					Accept: 'application/vnd.github+json'
+					Accept: 'application/vnd.github+json',
+					Authorization: `Bearer ${GITHUB_API_TOKEN}`
 				}
 			}
 		);
-		const treeJson = await treeResponse.json();
+		const treeJson: GithubTree = await treeResponse.json();
 
 		if (!treeResponse.ok && 'message' in treeJson) {
 			throw new Error(
@@ -38,8 +54,27 @@ export async function load({ params }: { params: { name: string } }) {
 			);
 		}
 
+		const reducedNestedTree = treeJson.tree.reduce((reduced, current) => {
+			const split = current.path.split('/');
+
+			const prevs = split.slice(0, -1);
+			const child = split.at(-1)!;
+
+			let curr = reduced;
+			for (const prev of prevs) curr = curr[prev]!;
+
+			if (current.type === 'tree' && !(child in curr)) {
+				curr[child] = {};
+			} else if (current.type === 'blob') {
+				curr[child] = null;
+			}
+
+			return reduced;
+		}, {} as MappedTree);
+
 		return {
-			contents: treeJson
+			contents: reducedNestedTree,
+			repoName: params.name
 		};
 	} catch (err) {
 		error(

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Button from '../components/Button.svelte';
+	import Button from '$lib/components/Button.svelte';
 
 	let visible = $state(false);
 	let isTypewriterBlinking = $state(false);

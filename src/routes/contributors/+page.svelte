@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { marked } from "marked";
+	import Markdown from '$lib/components/Markdown.svelte';
 	import type { GithubMember } from './+page.server';
 
 	type GitHubFileResponse = {
@@ -45,43 +45,23 @@
 		const decoded = atob(data);
 		const byteArray = new Uint8Array(decoded.length);
 		for (let i = 0; i < decoded.length; i++) {
-   			byteArray[i] = decoded.charCodeAt(i);
-  		}
+			byteArray[i] = decoded.charCodeAt(i);
+		}
 
-		return new TextDecoder("utf-8").decode(byteArray);
-	}
-
-	function mdToHtml(md: string) {
-		marked.use(
-			{
-				renderer: {
-					image({ href, title, text, tokens }) {
-						console.log([href, title, text, tokens]);
-						if (href.startsWith(".")) {
-							href = new URL(href, `https://raw.githubusercontent.com/${modalOpen}/${modalOpen}/refs/heads/main/`).toString();
-						}
-
-						return `<img src="${href}" alt="${text}" title="${title}" width="100%" />`;
-					}
-				}
-			}
-		);
-
-		return marked.parse(md, {
-			gfm: true
-		});
+		return new TextDecoder('utf-8').decode(byteArray);
 	}
 </script>
 
-<div class="mx-auto grid max-w-screen-xl grid-cols-1 py-24 md:grid-cols-3">
+<div
+	class="mx-auto grid max-w-screen-xl grid-cols-1 gap-x-4 px-4 py-24 md:grid-cols-2 lg:grid-cols-3"
+>
 	<h1 class="col-span-full py-10 text-center text-3xl">Kenalan yuk sama Team Bellshade!</h1>
 	{#if data.members.length > 0 || data.outsideCollaborators.length > 0}
 		{#each [...data.members, ...data.outsideCollaborators] as contributor}
 			<div class="flex flex-row items-center justify-center">
-				<a
+				<button
 					onclick={(e) => handleOpenModal(e, contributor)}
-					href="/"
-					class="group my-8 flex h-40 w-75 items-center rounded-lg border border-gray-300 p-8 transition-all hover:rotate-2 hover:bg-gray-100 md:h-50 md:w-100"
+					class="group my-8 flex h-40 w-75 cursor-pointer items-center rounded-lg border border-gray-300 p-8 transition-all hover:rotate-2 hover:bg-gray-100 md:h-50 md:w-100"
 				>
 					<div class="flex items-center gap-4">
 						<img
@@ -91,7 +71,7 @@
 						/>
 						<p class="text-md md:text-lg">{contributor.login}</p>
 					</div>
-				</a>
+				</button>
 			</div>
 		{/each}
 	{:else}
@@ -100,9 +80,9 @@
 </div>
 
 {#if modalOpen != null}
-	<div class="fixed inset-0 z-50 max-w-full w-full flex justify-center">
-		<div class="w-full h-full bg-black opacity-50" onclick={closeModal}></div>
-		<div class="absolute max-h-screen h-full flex items-center">
+	<div class="fixed inset-0 z-50 flex w-full max-w-full justify-center">
+		<div class="h-full w-full bg-black opacity-50" onclick={closeModal}></div>
+		<div class="absolute flex h-full max-h-screen items-center">
 			<div class="relative rounded-lg bg-white p-8 shadow-lg">
 				<button
 					class="absolute top-1 right-2 text-2xl font-bold text-gray-400 hover:text-gray-600"
@@ -116,9 +96,7 @@
 				{:else if typeof modalData === 'string'}
 					<div class="py-8 text-center text-red-500">{modalData}</div>
 				{:else if modalData && modalData.content}
-					<div class="prose w-[calc(100vw-8rem)] h-[calc(100vh-8rem)] overflow-auto border border-black rounded p-4">
-						{@html mdToHtml(parseBase64Data(modalData.content))}
-					</div>
+					<Markdown content={parseBase64Data(modalData.content)} githubMemberName={modalOpen} />
 				{:else}
 					<div class="py-8 text-center text-gray-500">No README found.</div>
 				{/if}

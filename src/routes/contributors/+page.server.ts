@@ -1,4 +1,5 @@
 import { error } from '@sveltejs/kit';
+import { GITHUB_API_TOKEN } from '$env/static/private';
 
 export type GithubMember = {
 	login: string;
@@ -12,12 +13,12 @@ type GithubOutsideCollaborator = {
 	html_url: string;
 };
 
-const GITHUB_TOKEN = 'token';
+export const prerender = true;
 
 export async function load() {
 	try {
 		const headers = {
-			Authorization: `Bearer ${GITHUB_TOKEN}`,
+			Authorization: `Bearer ${GITHUB_API_TOKEN}`,
 			'X-GitHub-Api-Version': '2022-11-28'
 		};
 		const [membersResponse, outsideCollaboratorsResponse] = await Promise.all([
