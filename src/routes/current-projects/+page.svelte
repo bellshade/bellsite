@@ -5,7 +5,10 @@
 		name: string;
 		description?: string;
 		image?: string;
-		links: Record<string, string>;
+		links: Record<string, {
+			isBlack: boolean;
+			url: string;
+		}>;
 	}
 
 	const projects: Project[] = [
@@ -13,15 +16,24 @@
 			name: "Bellsite",
 			description: "Website resmi Bellshade yang dibuat dengan SvelteKit",
 			links: {
-				"View Repository": "https://github.com/bellshade/bellsite",
-				"View Website": "/"
+				"View Repository": {
+					isBlack: true,
+					url: "https://github.com/bellshade/bellsite"
+				},
+				"View Website": {
+					isBlack: false,
+					url: "/"
+				}
 			}
 		},
 		{
 			name: "Craftcord",
 			description: "Minecraft chat bridge plugin for Spigot/Paper designed for multiple Discord servers",
 			links: {
-				"View Repository": "https://github.com/bellshade/Craftcord"
+				"View Repository": {
+					isBlack: true,
+					url: "https://github.com/bellshade/Craftcord"
+				}
 			},
 			image: "https://media.discordapp.net/attachments/1382037533231284244/1387484082555981845/2025-06-23_23.47.17.png?ex=685e2b7f&is=685cd9ff&hm=534605732efdb8884979d55ff403c3407e210cff0ed97d0aa7963e76da88ae8d&=&format=webp&quality=lossless&width=1322&height=744"
 		},
@@ -29,8 +41,14 @@
 			name: "bellfetch",
 			description: "Aplikasi untuk menampilkan informasi arsitektur sistem. dibuat dengan menggunakan POSIX sh",
 			links: {
-				"View Repository": "https://github.com/bellshade/bellfetch",
-				"Installation Guide": "https://github.com/bellshade/bellfetch?tab=readme-ov-file#installasi"
+				"View Repository": {
+					isBlack: true,
+					url: "https://github.com/bellshade/bellfetch"
+				},
+				"Installation Guide": {
+					isBlack: false,
+					url: "https://github.com/bellshade/bellfetch?tab=readme-ov-file#installasi"
+				}
 			}
 		}
 	];
@@ -65,13 +83,19 @@
 				<p class="text-sm text-justify">{project.description ?? "No description."}</p>
 			</div>
 			<div class="flex flex-col gap-2">
-				{#each Object.entries(project.links) as [label, url]}
+				{#each Object.entries(project.links) as [label, link]}
 					<div class="flex flex-col gap-2">
 						<a
-							href={url}
+							href={link.url}
 							target="_blank"
 							rel="noopener noreferrer"
-							class="block w-full rounded-md border border-zinc-300 bg-white p-2 text-center text-sm transition-transform ease-in-out hover:rotate-2 hover:bg-zinc-100"
+							class={[
+								"block w-full rounded-md border border-zinc-300 p-2 text-center text-sm transition-transform ease-in-out hover:rotate-2",
+								{
+									"bg-zinc-800 text-white": link.isBlack,
+									"bg-white text-black hover:bg-zinc-100": !link.isBlack
+								}
+							]}
 						>
 							{label}
 						</a>
