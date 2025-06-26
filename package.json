@@ -43,5 +43,8 @@
 		"vite-plugin-devtools-json": "^0.2.0",
 		"vitest": "^3.2.3",
 		"vitest-browser-svelte": "^0.1.0"
+	},
+	"dependencies": {
+		"marked": "^15.0.12"
 	}
 }
