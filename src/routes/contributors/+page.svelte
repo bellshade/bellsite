@@ -59,7 +59,7 @@
 
 {#if modalOpen}
 	<div class="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-		<div class="relative max-w-250 rounded-lg bg-white p-6 shadow-lg">
+		<div class="relative max-h-200 max-w-250 rounded-lg bg-white p-6 shadow-lg">
 			<button
 				class="absolute top-4 right-4 text-2xl font-bold text-gray-400 hover:text-gray-600"
 				onclick={closeModal}
@@ -72,7 +72,7 @@
 			{:else if typeof modalData === 'string'}
 				<div class="py-8 text-center text-red-500">{modalData}</div>
 			{:else if modalData && modalData.content}
-				<div class="prose min-w-120 overflow-auto py-4">
+				<div class="prose max-h-180 min-w-120 overflow-auto py-4">
 					<pre>{atob(modalData.content)}</pre>
 				</div>
 			{:else}

@@ -12,8 +12,7 @@ type GithubOutsideCollaborator = {
 	html_url: string;
 };
 
-const GITHUB_TOKEN =
-	'token';
+const GITHUB_TOKEN = 'token';
 
 export async function load() {
 	try {
