@@ -2,10 +2,6 @@
 	import Markdown from '$lib/components/Markdown.svelte';
 	import type { GithubMember } from './+page.server';
 
-	type GitHubFileResponse = {
-		content?: string;
-	};
-
 	const map = new Map<string, string>();
 
 	const { data } = $props();
@@ -40,20 +36,10 @@
 		modalData = '';
 		loading = false;
 	}
-
-	function parseBase64Data(data: string) {
-		const decoded = atob(data);
-		const byteArray = new Uint8Array(decoded.length);
-		for (let i = 0; i < decoded.length; i++) {
-			byteArray[i] = decoded.charCodeAt(i);
-		}
-
-		return new TextDecoder('utf-8').decode(byteArray);
-	}
 </script>
 
 <div
-	class="mx-auto grid max-w-screen-xl grid-cols-1 gap-x-4 px-4 py-24 md:grid-cols-2 lg:grid-cols-3"
+	class="mx-auto grid max-w-screen-xl grid-cols-1 gap-4 px-4 py-24 md:grid-cols-2 lg:grid-cols-3"
 >
 	<h1 class="col-span-full py-10 text-center text-3xl">Kenalan yuk sama Team Bellshade!</h1>
 	{#if data.members.length > 0 || data.outsideCollaborators.length > 0}
@@ -61,9 +47,9 @@
 			<div class="flex flex-row items-center justify-center">
 				<button
 					onclick={(e) => handleOpenModal(e, contributor)}
-					class="group my-2 flex h-40 w-[calc(100vw-4rem)] cursor-pointer items-center rounded-lg border border-gray-300 p-8 transition-all hover:rotate-2 hover:bg-gray-100 md:my-8 md:h-50 md:w-100"
+					class="group flex w-full cursor-pointer items-center rounded-lg border border-gray-300 p-10 transition-all hover:rotate-2 hover:bg-gray-100"
 				>
-					<div class="flex items-center gap-4 overflow-hidden">
+					<div class="flex items-center gap-4">
 						<img
 							src={contributor.avatar_url}
 							alt="Contributor"
@@ -98,7 +84,11 @@
 				{:else if typeof modalData === 'string'}
 					<div class="py-8 text-center text-red-500">{modalData}</div>
 				{:else if modalData}
-					<Markdown content={modalData.content} baseUrl="https://raw.githubusercontent.com/{modalOpen}/{modalOpen}/refs/heads/main/" />
+					<Markdown
+						content={modalData.content}
+						imageResolver={path => path.startsWith(".") ? new URL(path, `https://raw.githubusercontent.com/${modalOpen}/${modalOpen}/refs/heads/main/`).toString() : path}
+						linkResolver={path => path.startsWith(".") ? new URL(path, `https://raw.githubusercontent.com/${modalOpen}/${modalOpen}/refs/heads/main/`).toString() : path}
+					/>
 				{:else}
 					<div class="py-8 text-center text-gray-500">No README found.</div>
 				{/if}

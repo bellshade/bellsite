@@ -1,8 +1,10 @@
 <script lang="ts">
 	import FileOrFolderNode from './FileOrFolderNode.svelte';
-	import { base } from '$app/paths';
+	
 	import { page } from '$app/state';
 	import Markdown from '$lib/components/Markdown.svelte';
+	import { resolve } from '$lib';
+
 	import { onMount } from 'svelte';
 	import { ArrowsPointingInIcon } from '@fvilers/heroicons-svelte/24/outline';
 
@@ -15,68 +17,64 @@
 		hasClientLoaded = true;
 	});
 
-	const isMarkdown = $derived.by(() => {
+	const getFileType = (name: string) => {
+		switch (true) {
+			case name.endsWith('.md'):
+			case name.endsWith('.markdown'):
+				return 'markdown';
+			
+			case name.endsWith('.png'):
+			case name.endsWith('.jpg'):
+			case name.endsWith('.gif'):
+				return 'image';
+
+			default: return 'text';
+		}
+	}
+
+	const metadata = $derived.by(async () => {
 		if (!hasClientLoaded) {
-			return false;
+			return null;
 		}
 
 		if (page.url.pathname.startsWith('/repos/') && !page.url.searchParams.has('file')) {
-			return true;
-		}
-		const fileName = page.url.searchParams.get('file') ?? '';
-		return fileName.endsWith('.md') || fileName.endsWith('.markdown');
-	});
+			if (!data.repoName) {
+				return null;
+			}
 
-	const isImage = $derived.by(() => {
-		if (!hasClientLoaded) {
-			return false;
-		}
-		if (page.url.pathname.startsWith('/repos/') && !page.url.searchParams.has('file')) {
-			return true;
-		}
-		const fileName = page.url.searchParams.get('file') ?? '';
-		return fileName.endsWith('.png') || fileName.endsWith('.jpg') || fileName.endsWith('.gif');
-	});
-
-	const fileData = $derived.by(async () => {
-		if (!hasClientLoaded) {
-			return '';
-		}
-
-		if (data.repoName && !page.url.searchParams.has('file')) {
 			const nameOfReadme = Object.keys(data.contents).find((e) => e.toLowerCase() === 'readme.md');
-
 			const response = await fetch(
 				`https://raw.githubusercontent.com/bellshade/${data.repoName}/main/${nameOfReadme}`
 			);
+
 			if (!response.ok) {
 				throw new Error(`Failed to fetch README: ${response.statusText}`);
 			}
 
-			return await response.text();
+			return {
+				type: 'markdown',
+				content: await response.text(),
+				extension: 'md',
+				path: nameOfReadme!
+			} as const
 		}
 
-		if (!data.repoName || !page.url.searchParams.has('file')) {
-			throw new Error('Repository name or file parameter is missing');
-		}
-
+		// Get readme files
+		const fileName = page.url.searchParams.get('file') ?? '';
 		const response = await fetch(
 			`https://raw.githubusercontent.com/bellshade/${data.repoName}/main/${page.url.searchParams.get('file') ?? ''}`
 		);
+
 		if (!response.ok) {
 			throw new Error(`Failed to fetch file data: ${response.statusText}`);
 		}
-
-		return await response.text();
-	});
-
-	const fileExtension = $derived.by(() => {
-		if (!hasClientLoaded || !page.url.searchParams.has('file')) {
-			return '';
-		}
-
-		const fileName = page.url.searchParams.get('file') ?? '';
-		return fileName.split('.').pop()?.toLowerCase() || '';
+		
+		return {
+			type: getFileType(fileName),
+			content: await response.text(),
+			extension: fileName.split('.').pop()?.toLowerCase() || '',
+			path: fileName
+		} as const;
 	});
 
 	function handleCollapseSidebar() {
@@ -100,18 +98,26 @@
 	</div>
 
 	<div class="mb-4 h-[calc(100vh-8rem)] grow rounded-xl border border-gray-300 p-4">
-		{#await fileData}
+		{#await metadata}
 			<p class="text-center text-gray-500">Loading file content...</p>
-		{:then content}
-			{#if isImage}
+		{:then meta}
+			{#if !meta}
+				<div>Hello World! :D</div>
+			{:else if meta.type === 'image'}
 				<img
 					src={`https://raw.githubusercontent.com/bellshade/${data.repoName}/main/${page.url.searchParams.get('file') ?? ''}`}
 					alt="Path"
 				/>
-			{:else if isMarkdown}
-				<Markdown {content} baseUrl="" />
+			{:else if meta.type === 'markdown'}
+				<Markdown
+					content={meta.content}
+					imageResolver={path => path.startsWith(".") ? new URL(path, `https://raw.githubusercontent.com/bellshade/${data.repoName}/main/`).toString() : path}
+	 				linkResolver={path => path.startsWith(".") ? "?link=" + resolve(meta.path, "..", path, "README.md") : path}
+				/>
 			{:else}
-				<Markdown content={`\`\`\`${fileExtension}\n${content}\n\`\`\``} baseUrl="" />
+				<Markdown
+					content={`\`\`\`${meta.extension}\n${meta.content}\n\`\`\``}
+				/>
 			{/if}
 		{:catch error}
 			<p class="text-red-500">Error loading file: {error.message}</p>

@@ -5,7 +5,7 @@
 	import hljs from 'highlight.js';
 	import 'highlight.js/styles/github-dark.min.css';
 
-	const { baseUrl, content }: { baseUrl: string; content: string; } = $props();
+	const { content, linkResolver, imageResolver }: { content: string; linkResolver?: (link: string) => string; imageResolver?: (link: string) => string } = $props();
 
 	const marked = new Marked(
 		markedHighlight({
@@ -17,28 +17,76 @@
 		})
 	);
 
+	const parseAttributes = (token: string) => {
+		return Object.fromEntries([...token.matchAll(/([a-zA-Z0-9_-]+)="([^"]*)"/g)].map((v) => [v[1], v[2]]))
+	}
+
+	const buildAttributes = (attributes: Record<string, string>) => {
+		return Object.entries(attributes).map(([key, value]) => `${key}="${value}"`).join(' ');
+	}
+
 	marked.use({
 		renderer: {
+			link: (token) => {
+				// relative
+				if (token.href.startsWith('.')) {
+					const link = linkResolver?.(token.href) ?? token.href;
+					return `<a href="${link}">${token.text}</a>`
+				}
+
+				return false;
+			},
 			image: ({ href, title, text, tokens }) => {
 				if (href.startsWith('.')) {
-					href = new URL(
-						href,
-						baseUrl
-					).toString();
+					href = imageResolver?.(href) ?? href;
 				}
 				return `<img src="${href}" alt="${text}" title="${title}" />`;
 			},
 			html: token => {
-				return token.raw.replace(/<(img|a)(\s+.*?)(src|href)="(.*?)"(.*?)>/g, (m, tag, sp1, attrname, src, sp2) => {
-					if (src.startsWith('.')) {
-	  					return `<${tag}${sp1}${attrname}="${new URL(
-	   						src,
-	   						baseUrl
-	  					).toString()}"${sp2}>`;
-	 				}
+				console.log(token.raw, token.block);
+				if (/^<a/.test(token.raw)) {
+					const attributes = parseAttributes(token.raw);
+					
+					if ('href' in attributes)
+						attributes.href = linkResolver?.(attributes.href) ?? attributes.href;
 
-	 				return m;
-				});
+					return `<a ${buildAttributes(attributes)}>`;
+				}
+
+				if (/^<img/.test(token.raw)) {
+					console.log(token.raw);
+	 				const attributes = parseAttributes(token.raw);
+
+	 				if ('src' in attributes)
+						attributes.src = imageResolver?.(attributes.src) ?? attributes.src;
+
+	 				return `<img ${buildAttributes(attributes)}>`;
+				}
+
+				if (token.block) {
+					const div = document.createElement('div');
+					div.innerHTML = token.raw;
+
+					const imgs = div.querySelectorAll('img');
+					imgs.forEach(img => {
+						const src = img.getAttribute('src');
+	  					if (src && src.startsWith('.')) {
+	   						img.setAttribute('src', imageResolver?.(src) ?? src);
+	  					}
+					});
+
+					const links = div.querySelectorAll('a');
+					links.forEach(link => {
+	  					const href = link.getAttribute('href');
+						if (href && href.startsWith('.')) {
+		  					link.setAttribute('href', linkResolver?.(href) ?? href);
+						}
+	 				});
+
+					token.raw = div.innerHTML;
+				}
+				
+				return token.raw;
 			}
 		}
 	});
