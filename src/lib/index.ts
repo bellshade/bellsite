@@ -19,6 +19,5 @@ export const includedRepoNames = [
 	'Ruby',
 	'Docker',
 	'zig',
-	'Julia',
 	'fortran'
 ];
