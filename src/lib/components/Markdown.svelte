@@ -43,26 +43,6 @@
 				return `<img src="${href}" alt="${text}" title="${title}" />`;
 			},
 			html: token => {
-				console.log(token.raw, token.block);
-				if (/^<a/.test(token.raw)) {
-					const attributes = parseAttributes(token.raw);
-					
-					if ('href' in attributes)
-						attributes.href = linkResolver?.(attributes.href) ?? attributes.href;
-
-					return `<a ${buildAttributes(attributes)}>`;
-				}
-
-				if (/^<img/.test(token.raw)) {
-					console.log(token.raw);
-	 				const attributes = parseAttributes(token.raw);
-
-	 				if ('src' in attributes)
-						attributes.src = imageResolver?.(attributes.src) ?? attributes.src;
-
-	 				return `<img ${buildAttributes(attributes)}>`;
-				}
-
 				if (token.block) {
 					const div = document.createElement('div');
 					div.innerHTML = token.raw;
@@ -84,6 +64,25 @@
 	 				});
 
 					token.raw = div.innerHTML;
+				}
+
+				// Chunks
+				if (/^<a/.test(token.raw)) {
+					const attributes = parseAttributes(token.raw);
+					
+					if ('href' in attributes)
+						attributes.href = linkResolver?.(attributes.href) ?? attributes.href;
+
+					return `<a ${buildAttributes(attributes)}>`;
+				}
+
+				if (/^<img/.test(token.raw)) {
+	 				const attributes = parseAttributes(token.raw);
+
+	 				if ('src' in attributes)
+						attributes.src = imageResolver?.(attributes.src) ?? attributes.src;
+
+	 				return `<img ${buildAttributes(attributes)}>`;
 				}
 				
 				return token.raw;
