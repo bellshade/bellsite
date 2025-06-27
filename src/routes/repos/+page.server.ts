@@ -1,3 +1,4 @@
+import { includedRepoNames } from '$lib';
 import { error } from '@sveltejs/kit';
 
 type GithubRepo = {
@@ -11,29 +12,6 @@ type GithubRepo = {
 };
 
 export const prerender = true;
-
-export const includedRepoNames = [
-	'Python',
-	'Javascript',
-	'CPP',
-	'PHP',
-	'Golang',
-	'Java',
-	'Typescript',
-	'Dart',
-	'HTML-CSS',
-	'Kotlin',
-	'SQL',
-	'Assembly',
-	'Shell',
-	'Rust',
-	'Solidity',
-	'Ruby',
-	'Docker',
-	'zig',
-	'Julia',
-	'fortran'
-];
 
 export async function load() {
 	try {

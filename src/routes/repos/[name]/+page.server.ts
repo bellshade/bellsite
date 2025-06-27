@@ -1,7 +1,7 @@
 import { GITHUB_API_TOKEN } from '$env/static/private';
 import { error } from '@sveltejs/kit';
 import type { EntryGenerator } from './$types';
-import { includedRepoNames } from '../+page.server';
+import { includedRepoNames } from '$lib';
 
 type GithubContent = {
 	sha: string;
