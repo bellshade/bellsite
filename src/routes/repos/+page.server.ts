@@ -12,30 +12,30 @@ type GithubRepo = {
 
 export const prerender = true;
 
-export async function load() {
-	const includedRepoNames = [
-		'Python',
-		'Javascript',
-		'CPP',
-		'PHP',
-		'Golang',
-		'Java',
-		'Typescript',
-		'Dart',
-		'HTML-CSS',
-		'Kotlin',
-		'SQL',
-		'Assembly',
-		'Shell',
-		'Rust',
-		'Solidity',
-		'Ruby',
-		'Docker',
-		'zig',
-		'Julia',
-		'fortran'
-	];
+export const includedRepoNames = [
+	'Python',
+	'Javascript',
+	'CPP',
+	'PHP',
+	'Golang',
+	'Java',
+	'Typescript',
+	'Dart',
+	'HTML-CSS',
+	'Kotlin',
+	'SQL',
+	'Assembly',
+	'Shell',
+	'Rust',
+	'Solidity',
+	'Ruby',
+	'Docker',
+	'zig',
+	'Julia',
+	'fortran'
+];
 
+export async function load() {
 	try {
 		const response = await fetch('https://api.github.com/orgs/bellshade/repos');
 		const json: GithubRepo[] = await response.json();

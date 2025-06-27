@@ -1,5 +1,7 @@
 import { GITHUB_API_TOKEN } from '$env/static/private';
 import { error } from '@sveltejs/kit';
+import type { EntryGenerator } from './$types';
+import { includedRepoNames } from '../+page.server';
 
 type GithubContent = {
 	sha: string;
@@ -17,6 +19,12 @@ type GithubTree = {
 export type MappedTree = { [key: string]: MappedTree | null };
 
 export const prerender = true;
+
+export const entries: EntryGenerator = () => {
+	return includedRepoNames.map((name) => ({
+		name
+	}));
+};
 
 export async function load({ params }: { params: { name: string } }) {
 	try {
