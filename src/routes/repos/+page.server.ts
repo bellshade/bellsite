@@ -15,7 +15,7 @@ export const prerender = true;
 
 export async function load() {
 	try {
-		const response = await fetch('https://api.github.com/orgs/bellshade/repos');
+		const response = await fetch('https://api.github.com/orgs/bellshade/repos?per_page=100');
 		const json: GithubRepo[] = await response.json();
 
 		if (!response.ok && 'message' in json) {

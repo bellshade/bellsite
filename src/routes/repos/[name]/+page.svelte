@@ -1,6 +1,6 @@
 <script lang="ts">
 	import FileOrFolderNode from './FileOrFolderNode.svelte';
-	
+
 	import { page } from '$app/state';
 	import Markdown from '$lib/components/Markdown.svelte';
 	import { resolve } from '$lib';
@@ -22,15 +22,16 @@
 			case name.endsWith('.md'):
 			case name.endsWith('.markdown'):
 				return 'markdown';
-			
+
 			case name.endsWith('.png'):
 			case name.endsWith('.jpg'):
 			case name.endsWith('.gif'):
 				return 'image';
 
-			default: return 'text';
+			default:
+				return 'text';
 		}
-	}
+	};
 
 	const metadata = $derived.by(async () => {
 		if (!hasClientLoaded) {
@@ -56,7 +57,7 @@
 				content: await response.text(),
 				extension: 'md',
 				path: nameOfReadme!
-			} as const
+			} as const;
 		}
 
 		// Get readme files
@@ -68,7 +69,7 @@
 		if (!response.ok) {
 			throw new Error(`Failed to fetch file data: ${response.statusText}`);
 		}
-		
+
 		return {
 			type: getFileType(fileName),
 			content: await response.text(),
@@ -86,10 +87,11 @@
 	<div
 		class={`relative mb-4 ${isSidebarCollapsed ? 'h-0 py-4' : 'h-[50vh] py-8'} w-full rounded-xl border border-gray-300 bg-zinc-100 transition-all md:h-[calc(100vh-8rem)] md:w-64 md:py-4`}
 	>
-		<button class="absolute p-2 top-0 left-0 w-full block md:hidden" onclick={handleCollapseSidebar}>
-			<ChevronDownIcon
-				class={["size-4 duration-100", { "-rotate-90": isSidebarCollapsed }]}
-			/>
+		<button
+			class="absolute top-0 left-0 block w-full p-2 md:hidden"
+			onclick={handleCollapseSidebar}
+		>
+			<ChevronDownIcon class={['size-4 duration-100', { '-rotate-90': isSidebarCollapsed }]} />
 		</button>
 		<div class="h-full w-full overflow-y-auto bg-zinc-100 px-2 transition-all">
 			<div>
@@ -116,9 +118,7 @@
 	 				linkResolver={path => path.startsWith("http") ? path : "?file=" + resolve(meta.path, "..", path, "README.md")}
 				/>
 			{:else}
-				<Markdown
-					content={`\`\`\`${meta.extension}\n${meta.content}\n\`\`\``}
-				/>
+				<Markdown content={`\`\`\`${meta.extension}\n${meta.content}\n\`\`\``} />
 			{/if}
 		{:catch error}
 			<p class="text-red-500">Error loading file: {error.message}</p>
