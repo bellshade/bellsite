@@ -61,7 +61,7 @@
 			<div class="flex flex-row items-center justify-center">
 				<button
 					onclick={(e) => handleOpenModal(e, contributor)}
-					class="group my-8 flex h-40 w-75 cursor-pointer items-center rounded-lg border border-gray-300 p-8 transition-all hover:rotate-2 hover:bg-gray-100 md:h-50 md:w-100"
+					class="group my-2 md:my-8 flex h-40 md:w-100 w-[calc(100vw-4rem)] cursor-pointer items-center rounded-lg border border-gray-300 p-8 transition-all hover:rotate-2 hover:bg-gray-100 md:h-50"
 				>
 					<div class="flex items-center gap-4">
 						<img
@@ -82,9 +82,9 @@
 {#if modalOpen != null}
 	<div class="fixed inset-0 z-50 flex w-full max-w-full items-center justify-center">
 		<div class="h-full w-full bg-black opacity-50" onclick={closeModal}></div>
-		<div class="absolute flex items-center">
+		<div class="absolute flex items-center max-w-[calc(100vw-2rem)] h-[calc(100vh-8rem)]">
 			<div
-				class="relative h-full max-h-[calc(100dvh-4rem)] overflow-y-scroll rounded-lg bg-white p-8 shadow-lg"
+				class="relative h-full max-h-[calc(100dvh-4rem)] overflow-y-scroll rounded-lg bg-white p-8 shadow-lg shrink"
 			>
 				<button
 					class="absolute top-1 right-2 text-2xl font-bold text-gray-400 hover:text-gray-600"
