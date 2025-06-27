@@ -46,14 +46,15 @@
 		<div class="mb-8 flex h-28 items-center justify-center gap-1">
 			{#if visible}
 				<h1
-					class="text-center text-8xl text-gray-900"
+					class="text-center text-6xl text-gray-900 md:text-8xl"
 					transition:typewriter={{ speed: 0.75 }}
 					onintroend={() => (isTypewriterBlinking = true)}
 				>
 					Bellshade.
 				</h1>
 			{/if}
-			<span class={['block h-24 w-1 bg-gray-900', { 'animate-blink': isTypewriterBlinking }]}
+			<span
+				class={['block h-18 w-1 bg-gray-900 md:h-24', { 'animate-blink': isTypewriterBlinking }]}
 			></span>
 		</div>
 		<div class="w-full border-y border-gray-300 py-8">
