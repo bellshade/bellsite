@@ -24,6 +24,17 @@
 		return fileName.endsWith('.md') || fileName.endsWith('.markdown');
 	});
 
+	const isImage = $derived.by(() => {
+		if (!hasClientLoaded) {
+			return false;
+		}
+		if (page.url.pathname.startsWith('/repos/') && !page.url.searchParams.has('file')) {
+			return true;
+		}
+		const fileName = page.url.searchParams.get('file') ?? '';
+		return fileName.endsWith('.png') || fileName.endsWith('.jpg') || fileName.endsWith('.gif');
+	});
+
 	const fileData = $derived.by(async () => {
 		if (!hasClientLoaded) {
 			return '';
@@ -79,7 +90,12 @@
 		{#await fileData}
 			<p class="text-center text-gray-500">Loading file content...</p>
 		{:then content}
-			{#if isMarkdown}
+			{#if isImage}
+				<img
+					src={`https://raw.githubusercontent.com/bellshade/${data.repoName}/main/${page.url.searchParams.get('file') ?? ''}`}
+					alt="Path"
+				/>
+			{:else if isMarkdown}
 				<Markdown {content} />
 			{:else}
 				<Markdown content={`\`\`\`${fileExtension}\n${content}\n\`\`\``} />
