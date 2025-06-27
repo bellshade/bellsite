@@ -1,13 +1,15 @@
 <script lang="ts">
 	import FileOrFolderNode from './FileOrFolderNode.svelte';
-	import { base } from "$app/paths";
+	import { base } from '$app/paths';
 	import { page } from '$app/state';
 	import Markdown from '$lib/components/Markdown.svelte';
 	import { onMount } from 'svelte';
+	import { ArrowsPointingInIcon } from '@fvilers/heroicons-svelte/24/outline';
 
 	const { data } = $props();
 
 	let hasClientLoaded = $state(false);
+	let isSidebarCollapsed = $state(false);
 
 	onMount(() => {
 		hasClientLoaded = true;
@@ -76,18 +78,28 @@
 		const fileName = page.url.searchParams.get('file') ?? '';
 		return fileName.split('.').pop()?.toLowerCase() || '';
 	});
+
+	function handleCollapseSidebar() {
+		isSidebarCollapsed = !isSidebarCollapsed;
+	}
 </script>
 
-<div class="mx-auto mt-25 flex max-w-screen-lg gap-x-4 px-4">
-	<div class="h-[calc(100vh-8rem)] w-64 rounded-xl border border-gray-300 bg-zinc-100 py-4">
-		<div class="h-full w-full overflow-y-auto bg-zinc-100 px-2">
+<div class="relative mx-auto mt-25 flex max-w-screen-lg flex-col gap-x-4 px-4 md:flex-row">
+	<ArrowsPointingInIcon
+		class="absolute top-2 left-6 block size-5 md:hidden"
+		onclick={handleCollapseSidebar}
+	/>
+	<div
+		class={`mb-4 ${isSidebarCollapsed ? 'h-0 py-4' : 'h-[50vh] py-8'} w-full rounded-xl border border-gray-300 bg-zinc-100 transition-all md:h-[calc(100vh-8rem)] md:w-64 md:py-4`}
+	>
+		<div class="h-full w-full overflow-y-auto bg-zinc-100 px-2 transition-all">
 			<div>
 				<FileOrFolderNode repoName={data.repoName} node={data.contents} />
 			</div>
 		</div>
 	</div>
 
-	<div class="h-[calc(100vh-8rem)] grow rounded-xl border border-gray-300 p-4">
+	<div class="mb-4 h-[calc(100vh-8rem)] grow rounded-xl border border-gray-300 p-4">
 		{#await fileData}
 			<p class="text-center text-gray-500">Loading file content...</p>
 		{:then content}
