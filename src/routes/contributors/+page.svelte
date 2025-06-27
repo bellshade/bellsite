@@ -80,10 +80,12 @@
 </div>
 
 {#if modalOpen != null}
-	<div class="fixed inset-0 z-50 flex w-full max-w-full justify-center">
+	<div class="fixed inset-0 z-50 flex w-full max-w-full items-center justify-center">
 		<div class="h-full w-full bg-black opacity-50" onclick={closeModal}></div>
-		<div class="absolute flex h-full max-h-screen items-center">
-			<div class="relative rounded-lg bg-white p-8 shadow-lg">
+		<div class="absolute flex items-center">
+			<div
+				class="relative h-full max-h-[calc(100dvh-4rem)] overflow-y-scroll rounded-lg bg-white p-8 shadow-lg"
+			>
 				<button
 					class="absolute top-1 right-2 text-2xl font-bold text-gray-400 hover:text-gray-600"
 					onclick={closeModal}
