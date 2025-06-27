@@ -2,10 +2,21 @@
 	import FileOrFolderNode from './FileOrFolderNode.svelte';
 	import { page } from '$app/state';
 	import Markdown from '$lib/components/Markdown.svelte';
+	import { onMount } from 'svelte';
 
 	const { data } = $props();
 
+	let hasClientLoaded = $state(false);
+
+	onMount(() => {
+		hasClientLoaded = true;
+	});
+
 	const isMarkdown = $derived.by(() => {
+		if (!hasClientLoaded) {
+			return false;
+		}
+
 		if (page.url.pathname.startsWith('/repos/') && !page.url.searchParams.has('file')) {
 			return true;
 		}
@@ -14,6 +25,10 @@
 	});
 
 	const fileData = $derived.by(async () => {
+		if (!hasClientLoaded) {
+			return '';
+		}
+
 		if (data.repoName && !page.url.searchParams.has('file')) {
 			const nameOfReadme = Object.keys(data.contents).find((e) => e.toLowerCase() === 'readme.md');
 
@@ -42,6 +57,10 @@
 	});
 
 	const fileExtension = $derived.by(() => {
+		if (!hasClientLoaded || !page.url.searchParams.has('file')) {
+			return '';
+		}
+
 		const fileName = page.url.searchParams.get('file') ?? '';
 		return fileName.split('.').pop()?.toLowerCase() || '';
 	});
