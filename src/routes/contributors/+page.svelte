@@ -6,11 +6,11 @@
 		content?: string;
 	};
 
-	const map = new Map();
+	const map = new Map<string, string>();
 
 	const { data } = $props();
 	let modalOpen: string | null = $state(null);
-	let modalData = $state<GitHubFileResponse | string>('');
+	let modalData = $state<string | { content: string }>('');
 	let loading = $state(false);
 
 	async function handleOpenModal(e: MouseEvent, contributor: GithubMember) {
@@ -20,13 +20,13 @@
 
 		try {
 			if (map.has(contributor.login)) {
-				modalData = map.get(contributor.login);
+				modalData = { content: map.get(contributor.login)! };
 			} else {
 				const response = await fetch(
-					`https://api.github.com/repos/${contributor.login}/${contributor.login}/contents/README.md`
+					`https://raw.githubusercontent.com/${contributor.login}/${contributor.login}/refs/heads/main/README.md`
 				);
-				modalData = await response.json();
-				map.set(contributor.login, modalData);
+				modalData = { content: await response.text() };
+				map.set(contributor.login, modalData.content);
 			}
 
 			loading = false;
@@ -97,8 +97,8 @@
 					<div class="py-8 text-center">Loading...</div>
 				{:else if typeof modalData === 'string'}
 					<div class="py-8 text-center text-red-500">{modalData}</div>
-				{:else if modalData && modalData.content}
-					<Markdown content={parseBase64Data(modalData.content)} githubMemberName={modalOpen} />
+				{:else if modalData}
+					<Markdown content={modalData.content} baseUrl="https://raw.githubusercontent.com/{modalOpen}/{modalOpen}/refs/heads/main/" />
 				{:else}
 					<div class="py-8 text-center text-gray-500">No README found.</div>
 				{/if}

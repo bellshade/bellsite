@@ -1,5 +1,6 @@
 <script lang="ts">
 	import FileOrFolderNode from './FileOrFolderNode.svelte';
+	import { base } from "$app/paths";
 	import { page } from '$app/state';
 	import Markdown from '$lib/components/Markdown.svelte';
 	import { onMount } from 'svelte';
@@ -80,9 +81,9 @@
 			<p class="text-center text-gray-500">Loading file content...</p>
 		{:then content}
 			{#if isMarkdown}
-				<Markdown {content} />
+				<Markdown {content} baseUrl="" />
 			{:else}
-				<Markdown content={`\`\`\`${fileExtension}\n${content}\n\`\`\``} />
+				<Markdown content={`\`\`\`${fileExtension}\n${content}\n\`\`\``} baseUrl="" />
 			{/if}
 		{:catch error}
 			<p class="text-red-500">Error loading file: {error.message}</p>

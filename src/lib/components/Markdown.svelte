@@ -5,7 +5,7 @@
 	import hljs from 'highlight.js';
 	import 'highlight.js/styles/github-dark.min.css';
 
-	const { content, githubMemberName }: { content: string; githubMemberName?: string } = $props();
+	const { baseUrl, content }: { baseUrl: string; content: string; } = $props();
 
 	const marked = new Marked(
 		markedHighlight({
@@ -23,10 +23,22 @@
 				if (href.startsWith('.')) {
 					href = new URL(
 						href,
-						`https://raw.githubusercontent.com/${githubMemberName}/${githubMemberName}/refs/heads/main/`
+						baseUrl
 					).toString();
 				}
 				return `<img src="${href}" alt="${text}" title="${title}" />`;
+			},
+			html: token => {
+				return token.raw.replace(/<(img|a)(\s+.*?)(src|href)="(.*?)"(.*?)>/g, (m, tag, sp1, attrname, src, sp2) => {
+					if (src.startsWith('.')) {
+	  					return `<${tag}${sp1}${attrname}="${new URL(
+	   						src,
+	   						baseUrl
+	  					).toString()}"${sp2}>`;
+	 				}
+
+	 				return m;
+				});
 			}
 		}
 	});
