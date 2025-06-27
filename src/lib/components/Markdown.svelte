@@ -40,7 +40,7 @@
 </script>
 
 <div
-	class="prose prose-headings:border-b prose-headings:border-gray-300 prose-li:my-0 prose-headings:pb-2 prose-headings:my-2 prose-img:inline-block prose-img:my-0.5 prose-p: h-[calc(100vh-8rem)] w-[calc(100vw-8rem)] overflow-auto rounded-lg border border-gray-300 p-4"
+	class="prose prose-headings:border-b prose-headings:border-gray-300 prose-li:my-0 prose-headings:pb-2 prose-headings:my-2 prose-img:inline-block prose-img:my-0.5 prose-p: h-full w-full overflow-auto rounded-lg p-4"
 >
 	{@html htmlContent}
 </div>

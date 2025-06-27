@@ -6,11 +6,27 @@
 	const { data } = $props();
 
 	const isMarkdown = $derived.by(() => {
+		if (page.url.pathname.startsWith('/repos/') && !page.url.searchParams.has('file')) {
+			return true;
+		}
 		const fileName = page.url.searchParams.get('file') ?? '';
 		return fileName.endsWith('.md') || fileName.endsWith('.markdown');
 	});
 
 	const fileData = $derived.by(async () => {
+		if (data.repoName && !page.url.searchParams.has('file')) {
+			const nameOfReadme = Object.keys(data.contents).find((e) => e.toLowerCase() === 'readme.md');
+
+			const response = await fetch(
+				`https://raw.githubusercontent.com/bellshade/${data.repoName}/main/${nameOfReadme}`
+			);
+			if (!response.ok) {
+				throw new Error(`Failed to fetch README: ${response.statusText}`);
+			}
+
+			return await response.text();
+		}
+
 		if (!data.repoName || !page.url.searchParams.has('file')) {
 			throw new Error('Repository name or file parameter is missing');
 		}
@@ -31,14 +47,16 @@
 	});
 </script>
 
-<div class="mx-auto mt-25 flex max-w-screen-xl gap-x-4 px-4">
-	<div class="w-64 rounded-xl border border-gray-300 bg-zinc-100 p-4">
-		<div class="overflow-x-auto">
-			<FileOrFolderNode repoName={data.repoName} node={data.contents} />
+<div class="mx-auto mt-25 flex max-w-screen-lg gap-x-4 px-4">
+	<div class="h-[calc(100vh-8rem)] w-64 rounded-xl border border-gray-300 bg-zinc-100 py-4">
+		<div class="h-full w-full overflow-y-auto bg-zinc-100 px-2">
+			<div>
+				<FileOrFolderNode repoName={data.repoName} node={data.contents} />
+			</div>
 		</div>
 	</div>
 
-	<div class="grow rounded-xl border border-gray-300 p-4">
+	<div class="h-[calc(100vh-8rem)] grow rounded-xl border border-gray-300 p-4">
 		{#await fileData}
 			<p class="text-center text-gray-500">Loading file content...</p>
 		{:then content}
