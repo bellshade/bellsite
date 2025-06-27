@@ -70,7 +70,7 @@
 		<div class="h-full w-full bg-black opacity-50" onclick={closeModal}></div>
 		<div class="absolute flex h-[calc(100vh-8rem)] max-w-[calc(100vw-2rem)] items-center">
 			<div
-				class="relative h-full max-h-[calc(100dvh-4rem)] shrink overflow-y-scroll rounded-lg bg-white p-8 shadow-lg"
+				class="relative h-full max-h-[calc(100dvh-4rem)] shrink rounded-lg bg-white p-8 shadow-lg"
 			>
 				<button
 					class="absolute top-1 right-2 text-2xl font-bold text-gray-400 hover:text-gray-600"
