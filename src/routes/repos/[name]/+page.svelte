@@ -113,7 +113,7 @@
 				<Markdown
 					content={meta.content}
 					imageResolver={path => path.startsWith(".") ? new URL(path, `https://raw.githubusercontent.com/bellshade/${data.repoName}/main/`).toString() : path}
-	 				linkResolver={path => path.startsWith(".") ? "?link=" + resolve(meta.path, "..", path, "README.md") : path}
+	 				linkResolver={path => path.startsWith("http") ? path : "?file=" + resolve(meta.path, "..", path, "README.md")}
 				/>
 			{:else}
 				<Markdown

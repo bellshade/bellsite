@@ -28,18 +28,13 @@
 	marked.use({
 		renderer: {
 			link: (token) => {
-				// relative
-				if (token.href.startsWith('.')) {
-					const link = linkResolver?.(token.href) ?? token.href;
-					return `<a href="${link}">${token.text}</a>`
-				}
+				if (token.text.startsWith("![")) return false;
 
-				return false;
+				const link = linkResolver?.(token.href) ?? token.href;
+				return `<a href="${link}">${token.text}</a>`;
 			},
 			image: ({ href, title, text, tokens }) => {
-				if (href.startsWith('.')) {
-					href = imageResolver?.(href) ?? href;
-				}
+				href = imageResolver?.(href) ?? href;
 				return `<img src="${href}" alt="${text}" title="${title}" />`;
 			},
 			html: token => {
@@ -50,15 +45,15 @@
 					const imgs = div.querySelectorAll('img');
 					imgs.forEach(img => {
 						const src = img.getAttribute('src');
-	  					if (src && src.startsWith('.')) {
-	   						img.setAttribute('src', imageResolver?.(src) ?? src);
-	  					}
+						if (src) {
+							img.setAttribute('src', imageResolver?.(src) ?? src);
+						}
 					});
 
 					const links = div.querySelectorAll('a');
 					links.forEach(link => {
 	  					const href = link.getAttribute('href');
-						if (href && href.startsWith('.')) {
+						if (href) {
 		  					link.setAttribute('href', linkResolver?.(href) ?? href);
 						}
 	 				});
@@ -99,7 +94,7 @@
 </script>
 
 <div
-	class="prose prose-headings:border-b prose-headings:border-gray-300 prose-li:my-0 prose-headings:pb-2 prose-headings:my-2 prose-img:inline-block prose-img:my-0.5 prose-p: h-full w-full overflow-auto rounded-lg p-4"
+	class="prose prose-hr:border-2 prose-hr:my-8 prose-hr:border-zinc-300 prose-headings:border-b prose-headings:border-gray-300 prose-li:my-0 prose-headings:pb-2 prose-headings:my-2 prose-img:inline-block prose-img:my-0.5 prose-p: h-full w-full overflow-auto rounded-lg p-4"
 >
 	{@html htmlContent}
 </div>
