@@ -6,7 +6,7 @@
 	import { resolve } from '$lib';
 
 	import { onMount } from 'svelte';
-	import { ArrowsPointingInIcon } from '@fvilers/heroicons-svelte/24/outline';
+	import { ChevronDownIcon } from '@fvilers/heroicons-svelte/24/outline';
 
 	const { data } = $props();
 
@@ -82,14 +82,15 @@
 	}
 </script>
 
-<div class="relative mx-auto mt-25 flex max-w-screen-lg flex-col gap-x-4 px-4 md:flex-row">
-	<ArrowsPointingInIcon
-		class="absolute top-2 left-6 block size-5 md:hidden"
-		onclick={handleCollapseSidebar}
-	/>
+<div class="mx-auto mt-25 flex max-w-screen-lg flex-col gap-x-4 px-4 md:flex-row">
 	<div
-		class={`mb-4 ${isSidebarCollapsed ? 'h-0 py-4' : 'h-[50vh] py-8'} w-full rounded-xl border border-gray-300 bg-zinc-100 transition-all md:h-[calc(100vh-8rem)] md:w-64 md:py-4`}
+		class={`relative mb-4 ${isSidebarCollapsed ? 'h-0 py-4' : 'h-[50vh] py-8'} w-full rounded-xl border border-gray-300 bg-zinc-100 transition-all md:h-[calc(100vh-8rem)] md:w-64 md:py-4`}
 	>
+		<button class="absolute p-2 top-0 left-0 w-full block md:hidden" onclick={handleCollapseSidebar}>
+			<ChevronDownIcon
+				class={["size-4 duration-100", { "-rotate-90": isSidebarCollapsed }]}
+			/>
+		</button>
 		<div class="h-full w-full overflow-y-auto bg-zinc-100 px-2 transition-all">
 			<div>
 				<FileOrFolderNode repoName={data.repoName} node={data.contents} />
