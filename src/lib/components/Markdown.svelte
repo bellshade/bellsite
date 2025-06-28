@@ -26,61 +26,51 @@
 	}
 
 	marked.use({
-		renderer: {
-			link: (token) => {
-				if (token.text.startsWith("![")) return false;
+		walkTokens: token => {
+			if (token.type === "link") {
+				token.href = linkResolver?.(token.href) ?? token.href;
+			} else if (token.type === "image") {
+				token.href = imageResolver?.(token.href) ?? token.href;
+			} else if (token.type === "html" && token.block) {
+				const div = document.createElement('div');
+				div.innerHTML = token.text;
 
-				const link = linkResolver?.(token.href) ?? token.href;
-				return `<a href="${link}">${token.text}</a>`;
-			},
-			image: ({ href, title, text, tokens }) => {
-				href = imageResolver?.(href) ?? href;
-				return `<img src="${href}" alt="${text}" title="${title}" />`;
-			},
-			html: token => {
-				if (token.block) {
-					const div = document.createElement('div');
-					div.innerHTML = token.raw;
+				const imgs = div.querySelectorAll('img');
+				imgs.forEach(img => {
+					const src = img.getAttribute('src');
+					if (src) {
+						img.setAttribute('src', imageResolver?.(src) ?? src);
+					}
+				});
 
-					const imgs = div.querySelectorAll('img');
-					imgs.forEach(img => {
-						const src = img.getAttribute('src');
-						if (src) {
-							img.setAttribute('src', imageResolver?.(src) ?? src);
-						}
-					});
+				const links = div.querySelectorAll('a');
+				links.forEach(link => {
+					const href = link.getAttribute('href');
+					if (href) {
+						link.setAttribute('href', linkResolver?.(href) ?? href);
+					}
+				});
 
-					const links = div.querySelectorAll('a');
-					links.forEach(link => {
-	  					const href = link.getAttribute('href');
-						if (href) {
-		  					link.setAttribute('href', linkResolver?.(href) ?? href);
-						}
-	 				});
-
-					token.raw = div.innerHTML;
-				}
-
+				token.text = div.innerHTML;
+			} else if (token.type === "html" && !token.block) {
 				// Chunks
 				if (/^<a/.test(token.raw)) {
-					const attributes = parseAttributes(token.raw);
+					const attributes = parseAttributes(token.text);
 					
 					if ('href' in attributes)
 						attributes.href = linkResolver?.(attributes.href) ?? attributes.href;
 
-					return `<a ${buildAttributes(attributes)}>`;
+					token.text = `<a ${buildAttributes(attributes)}>`;
 				}
 
 				if (/^<img/.test(token.raw)) {
-	 				const attributes = parseAttributes(token.raw);
+	 				const attributes = parseAttributes(token.text);
 
 	 				if ('src' in attributes)
 						attributes.src = imageResolver?.(attributes.src) ?? attributes.src;
 
-	 				return `<img ${buildAttributes(attributes)}>`;
+	 				token.text = `<img ${buildAttributes(attributes)}>`;
 				}
-				
-				return token.raw;
 			}
 		}
 	});

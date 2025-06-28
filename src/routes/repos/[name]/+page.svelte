@@ -20,6 +20,7 @@
 	const getFileType = (name: string) => {
 		switch (true) {
 			case name.endsWith('.md'):
+			case name.endsWith(".MD"):
 			case name.endsWith('.markdown'):
 				return 'markdown';
 
@@ -114,7 +115,7 @@
 			{:else if meta.type === 'markdown'}
 				<Markdown
 					content={meta.content}
-					imageResolver={path => path.startsWith(".") ? new URL(path, `https://raw.githubusercontent.com/bellshade/${data.repoName}/main/`).toString() : path}
+					imageResolver={path => path.startsWith("http") ? path : new URL(path, `https://raw.githubusercontent.com/bellshade/${data.repoName}/main/${meta.path}`).toString()}
 	 				linkResolver={path => path.startsWith("http") ? path : "?file=" + resolve(meta.path, "..", path, "README.md")}
 				/>
 			{:else}
