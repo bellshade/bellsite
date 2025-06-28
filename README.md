@@ -1,40 +1,17 @@
-# bellsite
+<img src="/static/bellshade.png" width="900"></img>
 
-NEW Bellshade Website 2025
+<h1 align="center">Bellsite</h1>
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+<p>The new official website for Bellshade*.</p>
 
-## Creating a project
+> \*[Bellshade](https://github.com/bellshade) is an open-source project created by WPU Community as an open-source learning platform.
 
-If you're seeing this, you've probably already done this step. Congrats!
+<br />
+<h1 align="center">Why Bellshade?</h1>
 
-```bash
-# create a new project in the current directory
-npx sv create
+1. Free learning with the in-browser repository explorer, ensuring ease of access whenever wherever.
+2. Open-source, meaning you can contribute to Bellsite or Bellshade. _See `CONTRIBUTING.md` of each repository to learn more._
 
-# create a new project in my-app
-npx sv create my-app
-```
-
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+<br />
+<hr />
+Made with <3 by Bellshade Team
