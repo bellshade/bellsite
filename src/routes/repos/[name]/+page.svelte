@@ -77,19 +77,19 @@
 			path: fileName
 		} as const;
 	});
-
-	function handleCollapseSidebar() {
-		isSidebarCollapsed = !isSidebarCollapsed;
-	}
 </script>
 
 <div class="mx-auto mt-25 flex max-w-screen-lg flex-col gap-x-4 px-4 md:flex-row">
 	<div
-		class={`relative mb-4 ${isSidebarCollapsed ? 'h-0 py-4' : 'h-[50vh] py-8'} w-full rounded-xl border border-gray-300 bg-zinc-100 transition-all md:h-[calc(100vh-8rem)] md:w-64 md:py-4`}
+		class={[
+			'relative mb-4 w-full rounded-xl border border-gray-300 bg-zinc-100 transition-all md:h-[calc(100vh-8rem)] md:w-64 md:py-4',
+			{ 'h-0 py-4': isSidebarCollapsed },
+			{ 'h-[50vh] py-8': !isSidebarCollapsed }
+		]}
 	>
 		<button
 			class="absolute top-0 left-0 block w-full p-2 md:hidden"
-			onclick={handleCollapseSidebar}
+			onclick={() => (isSidebarCollapsed = !isSidebarCollapsed)}
 		>
 			<ChevronDownIcon class={['size-4 duration-100', { '-rotate-90': isSidebarCollapsed }]} />
 		</button>
