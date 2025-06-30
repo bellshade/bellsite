@@ -2,6 +2,33 @@
 	import { StarIcon } from '@fvilers/heroicons-svelte/16/solid';
 
 	const { data } = $props();
+
+	const repoLogos: { [key: string]: string } = {
+		python: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg',
+		javascript:
+			'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg',
+		cpp: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg',
+		php: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/php/php-original.svg',
+		java: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg',
+		kotlin: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/kotlin/kotlin-original.svg',
+		sql: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/azuresqldatabase/azuresqldatabase-original.svg',
+		dart: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/dart/dart-original.svg',
+		golang: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/go/go-original.svg',
+		typescript:
+			'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg',
+		'html-css':
+			'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg',
+		shell:
+			'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/powershell/powershell-original.svg',
+		rust: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/rust/rust-original.svg',
+		zig: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/zig/zig-original.svg',
+		docker: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg',
+		fortran:
+			'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/fortran/fortran-original.svg',
+		solidity:
+			'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/solidity/solidity-original.svg',
+		assembly: 'https://static.cdnlogo.com/logos/n/79/netwide-assembler.svg'
+	};
 </script>
 
 <div>
@@ -14,17 +41,22 @@
 		</p>
 		{#each data.repos as repo}
 			<div
-				class="flex flex-col gap-y-4 rounded-lg border border-zinc-300 p-4 transition-colors hover:bg-zinc-100"
+				class="group flex flex-col gap-y-4 rounded-lg border border-zinc-300 bg-white p-4 transition-colors hover:bg-zinc-100"
 			>
-				<div class="flex-grow space-y-2">
-					<div class="flex flex-wrap justify-between gap-1">
+				<div class="relative flex-grow space-y-2">
+					<img
+						src={repoLogos[repo.name.toLowerCase()] ?? ''}
+						alt={repo.name}
+						class="absolute -top-3 right-0 z-10 w-24 opacity-0 duration-200 group-hover:opacity-20"
+					/>
+					<div class="flex flex-wrap gap-5">
 						<h2 class="text-xl underline">{repo.name}</h2>
 						<div class="flex items-center gap-1">
 							<p class="text-sm">{repo.stargazers_count}</p>
 							<StarIcon class="size-4 flex-shrink-0" />
 						</div>
 					</div>
-					<p class="text-sm">{repo.description ?? 'No description.'}</p>
+					<p class="relative z-100 text-sm">{repo.description ?? 'No description.'}</p>
 				</div>
 				<div class="flex flex-col gap-2">
 					<a
