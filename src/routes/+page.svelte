@@ -31,7 +31,7 @@
 </script>
 
 <div class="relative h-100 overflow-hidden">
-	<img src="/cover.png" alt="Bellshade Logo" class="absolute size-full object-cover" />
+	<img src="/cover.svg" alt="Bellshade Logo" class="absolute size-full object-cover" />
 	<div class="absolute h-full w-full bg-gradient-to-b from-transparent to-white"></div>
 	<div
 		class="absolute right-0 bottom-0 size-100 translate-1/2 rounded-full bg-white blur-3xl"

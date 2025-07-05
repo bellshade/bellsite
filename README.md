@@ -1,4 +1,4 @@
-![Bellsite Cover](/static/cover.png)
+![Bellsite Cover](/static/cover.svg)
 
 # Bellsite
 
