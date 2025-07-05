@@ -26,7 +26,7 @@
 </script>
 
 <nav
-	class="fixed top-6 left-1/2 z-50 flex max-w-[calc(100%-2rem)] min-w-max -translate-x-1/2 justify-center rounded-xl border border-gray-300 bg-white px-4 py-1 shadow-lg md:w-auto"
+	class="fixed top-6 right-4 z-50 flex justify-center rounded-xl border border-gray-300 bg-white px-4 py-1 shadow-lg md:w-auto sm:right-1/2 sm:translate-x-1/2 max-w-[calc(100%-2rem)] min-w-max"
 >
 	<div class="flex flex-row items-center justify-evenly gap-4">
 		<div class={['shrink-0 rounded-lg p-1', { 'bg-gray-200': page.url.pathname === '/' }]}>
@@ -45,7 +45,7 @@
 				</li>
 			{/each}
 			<li
-				class={['group/dropdown relative rounded-lg px-2 py-1', { 'bg-gray-200': isHamburgerOpen }]}
+				class={['group/dropdown rounded-lg px-2 py-1', { 'bg-gray-200': isHamburgerOpen }]}
 			>
 				<button
 					onclick={() => (isHamburgerOpen = !isHamburgerOpen)}
@@ -59,7 +59,7 @@
 				</button>
 				<ul
 					class={[
-						'absolute top-full -left-25 rounded-md bg-white shadow-lg group-hover/dropdown:block sm:-left-10',
+						'absolute mt-3 right-0 top-full rounded-md bg-white shadow-lg',
 						{ block: isHamburgerOpen },
 						{ hidden: !isHamburgerOpen }
 					]}
