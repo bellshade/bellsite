@@ -24,7 +24,7 @@
 	return a.localeCompare(b);
 }) as key}
 	{@const isFolder = node[key] !== null}
-	<div style="padding-left: {path.length * 1}rem" class="text-sm">
+	<div style="padding-left: {path.length * 1}rem" class="text-sm dark:bg-gray-700">
 		<button
 			onclick={() => {
 				if (isFolder) {

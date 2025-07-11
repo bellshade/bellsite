@@ -41,13 +41,15 @@
 <div
 	class="mx-auto grid max-w-screen-xl grid-cols-1 gap-4 px-4 py-24 md:grid-cols-2 lg:grid-cols-3"
 >
-	<h1 class="col-span-full py-10 text-center text-3xl">Kenalan yuk sama Team Bellshade!</h1>
+	<h1 class="col-span-full py-10 text-center text-3xl dark:text-gray-300">
+		Kenalan yuk sama Team Bellshade!
+	</h1>
 	{#if data.members.length > 0 || data.outsideCollaborators.length > 0}
 		{#each [...data.members, ...data.outsideCollaborators] as contributor}
 			<div class="flex flex-row items-center justify-center">
 				<button
 					onclick={(e) => handleOpenModal(e, contributor)}
-					class="group flex w-full cursor-pointer items-center rounded-lg border border-gray-300 p-10 transition-all hover:rotate-2 hover:bg-gray-100"
+					class="group flex w-full cursor-pointer items-center rounded-lg border border-gray-300 p-10 transition-all hover:rotate-2 hover:bg-gray-100 dark:hover:bg-gray-800"
 				>
 					<div class="flex items-center gap-4">
 						<img
@@ -55,7 +57,7 @@
 							alt="Contributor"
 							class="w-18 rounded-full transition-transform group-hover:scale-105 md:w-25"
 						/>
-						<p class="text-md md:text-lg">{contributor.login}</p>
+						<p class="text-md md:text-lg dark:text-gray-300">{contributor.login}</p>
 					</div>
 				</button>
 			</div>
@@ -70,7 +72,7 @@
 		<div class="h-full w-full bg-black opacity-50" onclick={closeModal}></div>
 		<div class="absolute flex h-[calc(100vh-8rem)] max-w-[calc(100vw-2rem)] items-center">
 			<div
-				class="relative h-full max-h-[calc(100dvh-4rem)] shrink rounded-lg bg-white p-8 shadow-lg"
+				class="relative h-full max-h-[calc(100dvh-4rem)] shrink rounded-lg bg-white p-8 shadow-lg dark:bg-gray-900"
 			>
 				<button
 					class="absolute top-1 right-2 text-2xl font-bold text-gray-400 hover:text-gray-600"
@@ -80,14 +82,26 @@
 					&times;
 				</button>
 				{#if loading}
-					<div class="py-8 text-center">Loading...</div>
+					<div class="py-8 text-center dark:text-gray-300">Loading...</div>
 				{:else if typeof modalData === 'string'}
 					<div class="py-8 text-center text-red-500">{modalData}</div>
 				{:else if modalData}
 					<Markdown
 						content={modalData.content}
-						imageResolver={path => path.startsWith(".") ? new URL(path, `https://raw.githubusercontent.com/${modalOpen}/${modalOpen}/refs/heads/main/`).toString() : path}
-						linkResolver={path => path.startsWith(".") ? new URL(path, `https://raw.githubusercontent.com/${modalOpen}/${modalOpen}/refs/heads/main/`).toString() : path}
+						imageResolver={(path) =>
+							path.startsWith('.')
+								? new URL(
+										path,
+										`https://raw.githubusercontent.com/${modalOpen}/${modalOpen}/refs/heads/main/`
+									).toString()
+								: path}
+						linkResolver={(path) =>
+							path.startsWith('.')
+								? new URL(
+										path,
+										`https://raw.githubusercontent.com/${modalOpen}/${modalOpen}/refs/heads/main/`
+									).toString()
+								: path}
 					/>
 				{:else}
 					<div class="py-8 text-center text-gray-500">No README found.</div>
