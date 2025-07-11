@@ -83,7 +83,7 @@
 <div class="mx-auto mt-25 flex max-w-screen-lg flex-col gap-x-4 px-4 md:flex-row">
 	<div
 		class={[
-			'relative mb-4 w-full rounded-xl border border-gray-300 bg-zinc-100 transition-all md:h-[calc(100vh-8rem)] md:w-64 md:py-4',
+			'relative mb-4 w-full rounded-xl border border-gray-300 bg-zinc-100 transition-all md:h-[calc(100vh-8rem)] md:w-64 md:py-4 dark:border-zinc-700 dark:bg-gray-700',
 			{ 'h-0 py-4': isSidebarCollapsed },
 			{ 'h-[50vh] py-8': !isSidebarCollapsed }
 		]}
@@ -94,14 +94,16 @@
 		>
 			<ChevronDownIcon class={['size-4 duration-100', { '-rotate-90': isSidebarCollapsed }]} />
 		</button>
-		<div class="h-full w-full overflow-y-auto bg-zinc-100 px-2 transition-all">
-			<div>
+		<div class="h-full w-full overflow-y-auto bg-zinc-100 px-2 transition-all dark:bg-gray-700">
+			<div class="dark:text-gray-50">
 				<FileOrFolderNode repoName={data.repoName} node={data.contents} />
 			</div>
 		</div>
 	</div>
 
-	<div class="mb-4 h-[calc(100vh-8rem)] grow rounded-xl border border-gray-300 p-4">
+	<div
+		class="mb-4 h-[calc(100vh-8rem)] grow rounded-xl border border-gray-300 p-4 dark:border-zinc-700"
+	>
 		{#await metadata}
 			<p class="text-center text-gray-500">Loading file content...</p>
 		{:then meta}

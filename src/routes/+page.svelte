@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Button from '$lib/components/Button.svelte';
+	import { isDarkMode } from '$lib/state/theme.svelte';
 
 	let visible = $state(false);
 	let isTypewriterBlinking = $state(false);
@@ -32,12 +33,14 @@
 
 <div class="relative h-100 overflow-hidden">
 	<img src="/cover.svg" alt="Bellshade Logo" class="absolute size-full object-cover" />
-	<div class="absolute h-full w-full bg-gradient-to-b from-transparent to-white"></div>
 	<div
-		class="absolute right-0 bottom-0 size-100 translate-1/2 rounded-full bg-white blur-3xl"
+		class="absolute h-full w-full bg-gradient-to-b from-transparent to-white dark:to-gray-900"
 	></div>
 	<div
-		class="absolute bottom-0 left-0 size-100 -translate-x-1/2 translate-y-1/2 rounded-full bg-white blur-3xl"
+		class="absolute right-0 bottom-0 size-100 translate-1/2 rounded-full bg-white blur-3xl dark:bg-gray-900"
+	></div>
+	<div
+		class="absolute bottom-0 left-0 size-100 -translate-x-1/2 translate-y-1/2 rounded-full bg-white blur-3xl dark:bg-gray-900"
 	></div>
 </div>
 
@@ -46,7 +49,7 @@
 		<div class="mb-8 flex h-28 items-center justify-center gap-1">
 			{#if visible}
 				<h1
-					class="text-center text-6xl text-gray-900 md:text-8xl"
+					class="text-center text-6xl text-gray-900 md:text-8xl dark:text-gray-50"
 					transition:typewriter={{ speed: 0.75 }}
 					onintroend={() => (isTypewriterBlinking = true)}
 				>
@@ -54,15 +57,18 @@
 				</h1>
 			{/if}
 			<span
-				class={['block h-18 w-1 bg-gray-900 md:h-24', { 'animate-blink': isTypewriterBlinking }]}
+				class={[
+					'block h-18 w-1 bg-gray-900 md:h-24 dark:bg-gray-50',
+					{ 'animate-blink': isTypewriterBlinking }
+				]}
 			></span>
 		</div>
 		<div class="w-full border-y border-gray-300 py-8">
-			<h3 class="pb-8 text-xl font-bold">Apa itu Bellshade?</h3>
-			<p class="mt-2 text-justify text-gray-600">
+			<h3 class="pb-8 text-xl font-bold dark:text-gray-50">Apa itu Bellshade?</h3>
+			<p class="mt-2 text-justify text-gray-600 dark:text-gray-300">
 				Bellshade adalah organisasi yang bergerak di bidang edukasi dan bersifat sumber terbuka
 				(open source). Bellshade dikelola dan berada di bawah naungan komunitas
-				<a href="https://discord.gg/wpu" class="text-black hover:underline">
+				<a href="https://discord.gg/wpu" class="text-black hover:underline dark:text-gray-50">
 					Web Programming UNPAS (WPU).
 				</a>
 				Nama Bellshade sendiri diambil dari Bahasa Inggris yang berarti "penutup lampu belajar", yang
@@ -84,7 +90,7 @@
 							<g
 								id="Dribbble-Light-Preview"
 								transform="translate(-140.000000, -7559.000000)"
-								fill="#ffffff"
+								fill={isDarkMode.toggled ? '#000000' : '#ffffff'}
 							>
 								<g id="icons" transform="translate(56.000000, 160.000000)">
 									<path

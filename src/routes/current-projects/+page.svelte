@@ -91,13 +91,13 @@
 	<div
 		class="mx-auto grid max-w-screen-xl grid-cols-1 gap-6 px-5 py-24 md:grid-cols-2 lg:grid-cols-3"
 	>
-		<h1 class="col-span-full py-8 text-center text-3xl">Bellshade Projects</h1>
-		<p class="col-span-full border-b border-gray-200 pb-6 text-center text-lg">
+		<h1 class="col-span-full py-8 text-center text-3xl dark:text-gray-300">Bellshade Projects</h1>
+		<p class="col-span-full border-b border-gray-200 pb-6 text-center text-lg dark:text-gray-300">
 			Projek yang dibuat oleh team dan contributor Bellshade
 		</p>
 		{#each projects as project}
 			<div
-				class="flex flex-col justify-between gap-y-4 rounded-lg border border-zinc-300 p-4 transition-colors hover:bg-zinc-100"
+				class="flex flex-col justify-between gap-y-4 rounded-lg border border-zinc-300 p-4 transition-colors hover:bg-zinc-100 dark:border-zinc-700 dark:hover:bg-gray-800"
 			>
 				<div class="flex grow flex-col items-center space-y-2">
 					{#if project.image}
@@ -114,8 +114,10 @@
 						</div>
 					{/if}
 
-					<h2 class="text-xl underline">{project.name}</h2>
-					<p class="text-justify text-sm">{project.description ?? 'No description.'}</p>
+					<h2 class="text-xl underline dark:text-gray-300">{project.name}</h2>
+					<p class="text-justify text-sm dark:text-gray-300">
+						{project.description ?? 'No description.'}
+					</p>
 				</div>
 				<div class="flex flex-col gap-2">
 					{#each Object.entries(project.links) as [label, link]}
@@ -125,10 +127,11 @@
 								target="_blank"
 								rel="noopener noreferrer"
 								class={[
-									'block w-full rounded-md border border-zinc-300 p-2 text-center text-sm transition-transform ease-in-out hover:rotate-2',
+									'block w-full rounded-md border border-zinc-300 p-2 text-center text-sm transition-transform ease-in-out hover:rotate-2 dark:border-zinc-700',
 									{
 										'bg-zinc-800 text-white': link.isBlack,
-										'bg-white text-black hover:bg-zinc-100': !link.isBlack
+										'bg-transparent text-black hover:bg-zinc-100 dark:text-gray-300 dark:hover:bg-gray-700':
+											!link.isBlack
 									}
 								]}
 							>

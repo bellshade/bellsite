@@ -5,7 +5,15 @@
 	import hljs from 'highlight.js';
 	import 'highlight.js/styles/github-dark.min.css';
 
-	const { content, linkResolver, imageResolver }: { content: string; linkResolver?: (link: string) => string; imageResolver?: (link: string) => string } = $props();
+	const {
+		content,
+		linkResolver,
+		imageResolver
+	}: {
+		content: string;
+		linkResolver?: (link: string) => string;
+		imageResolver?: (link: string) => string;
+	} = $props();
 
 	const marked = new Marked(
 		markedHighlight({
@@ -18,14 +26,19 @@
 	);
 
 	const parseAttributes = (token: string) => {
-		return Object.fromEntries([...token.matchAll(/([a-zA-Z0-9_-]+)="([^"]*)"/g)].map((v) => [v[1], v[2]]))
-	}
+		return Object.fromEntries(
+			[...token.matchAll(/([a-zA-Z0-9_-]+)="([^"]*)"/g)].map((v) => [v[1], v[2]])
+		);
+	};
 
 	const buildAttributes = (attributes: Record<string, string>) => {
-		return Object.entries(attributes).map(([key, value]) => `${key}="${value}"`).join(' ');
-	}
+		return Object.entries(attributes)
+			.map(([key, value]) => `${key}="${value}"`)
+			.join(' ');
+	};
 
 	marked.use({
+
 		walkTokens: token => {
 			if (token.type === "link") {
 				token.href = linkResolver?.(token.href) ?? token.href;
@@ -56,7 +69,7 @@
 				// Chunks
 				if (/^<a/.test(token.raw)) {
 					const attributes = parseAttributes(token.text);
-					
+			
 					if ('href' in attributes)
 						attributes.href = linkResolver?.(attributes.href) ?? attributes.href;
 
@@ -64,9 +77,10 @@
 				}
 
 				if (/^<img/.test(token.raw)) {
+
 	 				const attributes = parseAttributes(token.text);
 
-	 				if ('src' in attributes)
+					if ('src' in attributes)
 						attributes.src = imageResolver?.(attributes.src) ?? attributes.src;
 
 	 				token.text = `<img ${buildAttributes(attributes)}>`;
@@ -84,7 +98,7 @@
 </script>
 
 <div
-	class="prose prose-hr:border-2 prose-hr:my-8 prose-hr:border-zinc-300 prose-headings:border-b prose-headings:border-gray-300 prose-li:my-0 prose-headings:pb-2 prose-headings:my-2 prose-img:inline-block prose-img:my-0.5 prose-p: h-full w-full overflow-auto rounded-lg p-4"
+	class="prose prose-hr:border-2 prose-hr:my-8 prose-hr:border-zinc-300 prose-headings:border-b prose-headings:border-gray-300 prose-li:my-0 prose-headings:pb-2 prose-headings:my-2 prose-img:inline-block prose-img:my-0.5 prose-p: h-full w-full overflow-auto rounded-lg p-4 dark:text-gray-300"
 >
 	{@html htmlContent}
 </div>
