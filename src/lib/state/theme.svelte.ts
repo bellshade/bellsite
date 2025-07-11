@@ -1,3 +1,3 @@
 export const isDarkMode = $state({
-	toggled: true
+	toggled: false
 });

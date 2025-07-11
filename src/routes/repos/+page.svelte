@@ -55,7 +55,7 @@
 						<h2 class="text-xl underline dark:text-gray-300">{repo.name}</h2>
 						<div class="flex items-center gap-1">
 							<p class="text-sm dark:text-gray-300">{repo.stargazers_count}</p>
-							<StarIcon class="size-4 flex-shrink-0" />
+							<StarIcon class="size-4 flex-shrink-0 dark:text-gray-300" />
 						</div>
 					</div>
 					<p class="relative z-100 text-sm dark:text-gray-300">
@@ -72,7 +72,7 @@
 						href={repo.html_url}
 						target="_blank"
 						rel="noopener noreferrer"
-						class="block w-full rounded-md border border-zinc-300 bg-white p-2 text-center text-sm transition-colors transition-transform ease-in-out hover:rotate-2 hover:bg-zinc-100 dark:bg-gray-300"
+						class="block w-full rounded-md border border-zinc-300 bg-transparent p-2 text-center text-sm transition-colors transition-transform ease-in-out hover:rotate-2 hover:bg-zinc-100 dark:text-gray-300 dark:hover:bg-gray-700"
 						>View Repository</a
 					>
 				</div>

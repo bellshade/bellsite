@@ -49,7 +49,7 @@
 			<div class="flex flex-row items-center justify-center">
 				<button
 					onclick={(e) => handleOpenModal(e, contributor)}
-					class="group flex w-full cursor-pointer items-center rounded-lg border border-gray-300 p-10 transition-all hover:rotate-2 hover:bg-gray-100 dark:hover:bg-gray-800"
+					class="group flex w-full cursor-pointer items-center rounded-lg border border-gray-300 p-10 transition-all hover:rotate-2 hover:bg-gray-100 dark:border-zinc-700 dark:hover:bg-gray-800"
 				>
 					<div class="flex items-center gap-4">
 						<img

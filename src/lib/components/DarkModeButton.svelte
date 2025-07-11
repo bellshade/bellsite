@@ -8,7 +8,7 @@
 <button
 	aria-label="dark-mode"
 	onclick={() => (isDarkMode.toggled = !isDarkMode.toggled)}
-	class={['bg-white', className]}
+	class={['bg-transparent hover:cursor-pointer', className]}
 >
-	<MoonIcon></MoonIcon>
+	<MoonIcon class={[{ 'text-gray-300': isDarkMode.toggled }]}></MoonIcon>
 </button>

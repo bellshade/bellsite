@@ -97,7 +97,7 @@
 		</p>
 		{#each projects as project}
 			<div
-				class="flex flex-col justify-between gap-y-4 rounded-lg border border-zinc-300 p-4 transition-colors hover:bg-zinc-100 dark:hover:bg-gray-800"
+				class="flex flex-col justify-between gap-y-4 rounded-lg border border-zinc-300 p-4 transition-colors hover:bg-zinc-100 dark:border-zinc-700 dark:hover:bg-gray-800"
 			>
 				<div class="flex grow flex-col items-center space-y-2">
 					{#if project.image}
@@ -130,7 +130,8 @@
 									'block w-full rounded-md border border-zinc-300 p-2 text-center text-sm transition-transform ease-in-out hover:rotate-2 dark:border-zinc-700',
 									{
 										'bg-zinc-800 text-white': link.isBlack,
-										'bg-white text-black hover:bg-zinc-100': !link.isBlack
+										'bg-transparent text-black hover:bg-zinc-100 dark:text-gray-300 dark:hover:bg-gray-700':
+											!link.isBlack
 									}
 								]}
 							>
