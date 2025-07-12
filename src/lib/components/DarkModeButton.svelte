@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { isDarkMode } from '$lib/state/theme.svelte';
-	import { MoonIcon } from '@fvilers/heroicons-svelte/16/solid';
+	import { MoonIcon, SunIcon } from '@fvilers/heroicons-svelte/16/solid';
 
 	const { className = '' } = $props();
 </script>
@@ -10,5 +10,9 @@
 	onclick={() => (isDarkMode.toggled = !isDarkMode.toggled)}
 	class={['bg-transparent hover:cursor-pointer', className]}
 >
-	<MoonIcon class={[{ 'text-gray-300': isDarkMode.toggled }]}></MoonIcon>
+	{#if isDarkMode.toggled}
+		<SunIcon class="text-gray-300" />
+	{:else}
+		<MoonIcon />
+	{/if}
 </button>
