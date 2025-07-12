@@ -72,7 +72,7 @@
 						href={repo.html_url}
 						target="_blank"
 						rel="noopener noreferrer"
-						class="block w-full rounded-md border border-zinc-300 bg-transparent p-2 text-center text-sm transition-colors transition-transform ease-in-out hover:rotate-2 hover:bg-zinc-100 dark:text-gray-300 dark:hover:bg-gray-700"
+						class="block w-full rounded-md border border-zinc-300 bg-transparent p-2 text-center text-sm transition-colors transition-transform ease-in-out hover:rotate-2 hover:bg-zinc-100 dark:border-zinc-700 dark:text-gray-300 dark:hover:bg-gray-700"
 						>View Repository</a
 					>
 				</div>

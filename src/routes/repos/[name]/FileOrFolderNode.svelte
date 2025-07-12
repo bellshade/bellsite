@@ -38,7 +38,7 @@
 					});
 				}
 			}}
-			class="flex min-w-full items-center gap-1 rounded-lg p-2 hover:bg-zinc-200"
+			class="flex min-w-full items-center gap-1 rounded-lg p-2 hover:bg-zinc-200 dark:hover:bg-gray-600"
 		>
 			{#if isFolder}
 				{#if keyToIsOpen[key]}

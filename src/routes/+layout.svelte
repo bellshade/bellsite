@@ -34,7 +34,7 @@
 </script>
 
 <nav
-	class="fixed top-6 right-4 z-50 flex justify-center rounded-xl border border-gray-300 bg-white px-4 py-1 shadow-lg md:w-auto sm:right-1/2 sm:translate-x-1/2 max-w-[calc(100%-2rem)] min-w-max dark:border-zinc-800 dark:bg-gray-900"
+	class="fixed top-6 right-4 z-999 flex max-w-[calc(100%-2rem)] min-w-max justify-center rounded-xl border border-gray-300 bg-white px-4 py-1 shadow-lg sm:right-1/2 sm:translate-x-1/2 md:w-auto dark:border-zinc-800 dark:bg-gray-900"
 >
 	<div class="flex flex-row items-center justify-evenly gap-4">
 		<div class="flex shrink-0 justify-center gap-4 rounded-lg p-1">
@@ -66,14 +66,14 @@
 					class="flex min-h-6 cursor-pointer items-center text-gray-600 hover:text-gray-800"
 				>
 					<span class="hidden sm:inline dark:text-gray-300">Lainnya</span>
-					<Bars3Icon class="size-4 sm:hidden" />
+					<Bars3Icon class="size-4 sm:hidden dark:text-gray-300" />
 					<ChevronDownIcon
 						class="ml-1 hidden size-4 transition-transform duration-300 group-hover/dropdown:rotate-180 sm:inline-block"
 					/>
 				</button>
 				<ul
 					class={[
-						'absolute mt-3 right-0 top-full rounded-md bg-white shadow-lg dark:bg-gray-900',
+						'absolute top-full right-0 mt-3 rounded-md bg-white shadow-lg dark:bg-gray-900',
 						{ block: isHamburgerOpen },
 						{ hidden: !isHamburgerOpen }
 					]}
