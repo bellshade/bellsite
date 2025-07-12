@@ -34,7 +34,7 @@
 </script>
 
 <nav
-	class="fixed top-6 right-4 z-999 flex max-w-[calc(100%-2rem)] min-w-max justify-center rounded-xl border border-gray-300 bg-white px-4 py-1 shadow-lg sm:right-1/2 sm:translate-x-1/2 md:w-auto dark:border-zinc-800 dark:bg-gray-900"
+	class="fixed top-6 right-4 z-999 flex max-w-[calc(100%-2rem)] min-w-max justify-center rounded-xl border border-gray-300 bg-white px-4 py-1 shadow-lg sm:right-1/2 sm:translate-x-1/2 md:w-auto dark:border-zinc-800 dark:bg-gray-900 dark:shadow-md dark:shadow-zinc-900"
 >
 	<div class="flex flex-row items-center justify-evenly gap-4">
 		<div class="flex shrink-0 justify-center gap-4 rounded-lg p-1">
@@ -68,7 +68,7 @@
 					<span class="hidden sm:inline dark:text-gray-300">Lainnya</span>
 					<Bars3Icon class="size-4 sm:hidden dark:text-gray-300" />
 					<ChevronDownIcon
-						class="ml-1 hidden size-4 transition-transform duration-300 group-hover/dropdown:rotate-180 sm:inline-block"
+						class="ml-1 hidden size-4 transition-transform duration-300 group-hover/dropdown:rotate-180 sm:inline-block dark:text-gray-300"
 					/>
 				</button>
 				<ul

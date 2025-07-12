@@ -7,6 +7,7 @@
 
 	import { onMount } from 'svelte';
 	import { ChevronDownIcon } from '@fvilers/heroicons-svelte/24/outline';
+	import { isDarkMode } from '$lib/state/theme.svelte';
 
 	const { data } = $props();
 
@@ -20,7 +21,7 @@
 	const getFileType = (name: string) => {
 		switch (true) {
 			case name.endsWith('.md'):
-			case name.endsWith(".MD"):
+			case name.endsWith('.MD'):
 			case name.endsWith('.markdown'):
 				return 'markdown';
 
@@ -92,7 +93,12 @@
 			class="absolute top-0 left-0 block w-full p-2 md:hidden"
 			onclick={() => (isSidebarCollapsed = !isSidebarCollapsed)}
 		>
-			<ChevronDownIcon class={['size-4 duration-100', { '-rotate-90': isSidebarCollapsed }]} />
+			<ChevronDownIcon
+				class={[
+					'size-4 duration-100',
+					{ '-rotate-90': isSidebarCollapsed, 'text-gray-300': isDarkMode.toggled }
+				]}
+			/>
 		</button>
 		<div class="h-full w-full overflow-y-auto bg-zinc-100 px-2 transition-all dark:bg-gray-700">
 			<div class="dark:text-gray-50">
@@ -117,8 +123,15 @@
 			{:else if meta.type === 'markdown'}
 				<Markdown
 					content={meta.content}
-					imageResolver={path => path.startsWith("http") ? path : new URL(path, `https://raw.githubusercontent.com/bellshade/${data.repoName}/main/${meta.path}`).toString()}
-	 				linkResolver={path => path.startsWith("http") ? path : "?file=" + resolve(meta.path, "..", path, "README.md")}
+					imageResolver={(path) =>
+						path.startsWith('http')
+							? path
+							: new URL(
+									path,
+									`https://raw.githubusercontent.com/bellshade/${data.repoName}/main/${meta.path}`
+								).toString()}
+					linkResolver={(path) =>
+						path.startsWith('http') ? path : '?file=' + resolve(meta.path, '..', path, 'README.md')}
 				/>
 			{:else}
 				<Markdown content={`\`\`\`${meta.extension}\n${meta.content}\n\`\`\``} />

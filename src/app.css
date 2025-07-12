@@ -28,3 +28,11 @@
 }
 
 @custom-variant dark (&:where(.dark, .dark *));
+
+.prose code:not(pre code) {
+	@apply mx-0.5 inline-block rounded-sm bg-gray-300 p-0.5;
+}
+
+.dark .prose code:not(pre code) {
+	@apply bg-gray-800;
+}

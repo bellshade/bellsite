@@ -99,7 +99,7 @@
 
 <div
 	class={[
-		'prose prose-hr:border-2 prose-hr:my-8 prose-hr:border-zinc-300 dark:prose-ht:border-zinc-700 prose-headings:border-b prose-headings:border-gray-300 prose-li:my-0 prose-headings:pb-2 prose-headings:my-2 prose-img:inline-block prose-img:my-0.5 dark:prose-a:text-gray-50 dark:prose-strong:text-gray-300 dark:prose-headings:text-gray-50 dark:prose-p:text-gray-300 h-full w-full overflow-auto rounded-lg p-4',
+		'prose prose-hr:border-2 prose-hr:my-8 prose-hr:border-zinc-300 dark:prose-ht:border-zinc-700 prose-headings:border-b prose-headings:border-gray-300 prose-li:my-0 prose-headings:pb-2 prose-headings:my-2 prose-img:inline-block prose-img:my-0.5 dark:prose-a:text-gray-50 dark:prose-strong:text-gray-300 dark:prose-headings:text-gray-50 dark:prose-p:text-gray-300 dark:prose-td:text-gray-300 dark:prose-li:text-gray-300 dark:prose-code:text-gray-300  prose-code:before:content-none prose-code:after:content-none h-full w-full overflow-auto rounded-lg p-4',
 		className
 	]}
 >
