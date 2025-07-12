@@ -102,6 +102,7 @@
 										`https://raw.githubusercontent.com/${modalOpen}/${modalOpen}/refs/heads/main/`
 									).toString()
 								: path}
+						className="prose-pre:w-[calc(80vw-2rem)] prose-code:w-[calc(80vw-2rem)]"
 					/>
 				{:else}
 					<div class="py-8 text-center text-gray-500">No README found.</div>
