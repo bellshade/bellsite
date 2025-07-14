@@ -67,7 +67,7 @@ export async function load({ params }: { params: { name: string } }) {
 	} catch (err) {
 		error(
 			500,
-			`Failed to fetch repository contents for reason: ${err instanceof Error ? err.message : 'Unknown error'}, ${JSON.stringify(err)}`
+			`Failed to fetch repository contents for reason: ${err instanceof Error ? err.message : 'Unknown error'}`
 		);
 	}
 }
