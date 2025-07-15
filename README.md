@@ -1,6 +1,6 @@
-![Bellsite Cover](https://raw.githubusercontent.com/bellshade/bellsite/refs/heads/main/static/cover.webp)
-
 # Bellsite
+
+![Bellsite Cover](https://raw.githubusercontent.com/bellshade/bellsite/refs/heads/main/static/cover.webp)
 
 The new official website for Bellshade\*.
 
