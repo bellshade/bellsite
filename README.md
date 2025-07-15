@@ -1,4 +1,4 @@
-![Bellsite Cover](/static/cover.svg)
+![Bellsite Cover](https://raw.githubusercontent.com/bellshade/bellsite/refs/heads/main/static/cover.webp)
 
 # Bellsite
 
