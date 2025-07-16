@@ -35,6 +35,37 @@
 		}
 	};
 
+	const linkResolver = (base: string, path: string) => {
+		if (path.startsWith('http')) {
+			return path;
+		}
+
+		const resolvedPath = resolve(base, "..", path);
+
+		let currentObject = data.contents;
+		const parts = resolvedPath.split('/');
+		const end = parts.pop() || "";
+
+		if (parts[0] === '') {
+			parts.shift();
+		}
+
+		for (const part of parts) {
+			if (currentObject[part]) {
+				currentObject = currentObject[part];
+			} else {
+				return `?file=${resolvedPath}`;
+			}
+		}
+
+		const [lastPart, ...idParts] = end.split('#');
+
+		const finalPath = parts.join("/") + (parts.length > 0 && lastPart ? '/' : '') + lastPart;
+		const id = idParts.length > 0 ? `#${idParts.join('#')}` : "";
+
+		return currentObject[lastPart] === null ? `?file=${finalPath}${id}` : `?file=${resolve(finalPath, "README.md")}${id}`;
+	}
+
 	const metadata = $derived.by(async () => {
 		if (!hasClientLoaded) {
 			return null;
@@ -130,8 +161,7 @@
 									path,
 									`https://raw.githubusercontent.com/bellshade/${data.repoName}/main/${meta.path}`
 								).toString()}
-					linkResolver={(path) =>
-						path.startsWith('http') ? path : '?file=' + resolve(meta.path, '..', path, 'README.md')}
+					linkResolver={(path) => linkResolver(meta.path, path)}
 				/>
 			{:else}
 				<Markdown content={`\`\`\`${meta.extension}\n${meta.content}\n\`\`\``} />
