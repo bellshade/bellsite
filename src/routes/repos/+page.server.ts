@@ -1,31 +1,33 @@
 import { includedRepoNames } from '$lib';
 import { error } from '@sveltejs/kit';
 
+import { Octokit } from 'octokit';
+
 type GithubRepo = {
-	id: string;
+	id: number;
 	name: string;
 	full_name: string;
 	description: string | null;
 	html_url: string;
-	stargazers_count: number;
-	language: string | null;
+	stargazers_count?: number;
 };
 
 export const prerender = true;
 
 export async function load() {
 	try {
-		const response = await fetch('https://api.github.com/orgs/bellshade/repos?per_page=100');
-		const json: GithubRepo[] = await response.json();
+		const octokit = new Octokit();
+		const response = await octokit.rest.repos.listForOrg({
+			org: 'bellshade',
+			type: 'public',
+			per_page: 100
+		});
 
-		if (!response.ok && 'message' in json) {
-			throw new Error(
-				`Error: GitHub API returned status code ${response.status} with message: ${json.message}`
-			);
-		}
+		const data: GithubRepo[] = response.data;
+
 
 		return {
-			repos: json.filter((repo) => includedRepoNames.includes(repo.name))
+			repos: data.filter((repo) => includedRepoNames.includes(repo.name))
 		};
 	} catch (err) {
 		error(

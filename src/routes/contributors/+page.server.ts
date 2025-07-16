@@ -1,6 +1,8 @@
 import { error } from '@sveltejs/kit';
 import { GITHUB_API_TOKEN } from '$env/static/private';
 
+import { Octokit } from "octokit";
+
 export type GithubMember = {
 	login: string;
 	avatar_url: string;
@@ -17,32 +19,19 @@ export const prerender = true;
 
 export async function load() {
 	try {
-		const headers = {
-			Authorization: `Bearer ${GITHUB_API_TOKEN}`,
-			'X-GitHub-Api-Version': '2022-11-28'
-		};
+		const octokit = new Octokit({
+			auth: GITHUB_API_TOKEN
+		});
 		const [membersResponse, outsideCollaboratorsResponse] = await Promise.all([
-			fetch('https://api.github.com/orgs/bellshade/public_members', {
-				headers
+			octokit.rest.orgs.listPublicMembers({
+				org: "bellshade"
 			}),
-			fetch('https://api.github.com/orgs/bellshade/outside_collaborators', {
-				headers
+			octokit.rest.orgs.listOutsideCollaborators({
+				org: "bellshade"
 			})
 		]);
-		const members: GithubMember[] = await membersResponse.json();
-		const outsideCollaborators: GithubOutsideCollaborator[] =
-			await outsideCollaboratorsResponse.json();
-
-		if (!membersResponse.ok && 'message' in members) {
-			throw new Error(
-				`Error: GitHub API returned status code ${membersResponse.status} with message: ${members.message}`
-			);
-		}
-		if (!outsideCollaboratorsResponse.ok && 'message' in outsideCollaborators) {
-			throw new Error(
-				`Error: GitHub API returned status code ${outsideCollaboratorsResponse.status} with message: ${outsideCollaborators.message}`
-			);
-		}
+		const members: GithubMember[] = membersResponse.data;
+		const outsideCollaborators: GithubOutsideCollaborator[] = outsideCollaboratorsResponse.data;
 
 		return { members, outsideCollaborators };
 	} catch (err) {

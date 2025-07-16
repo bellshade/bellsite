@@ -48,6 +48,7 @@
 		"highlight.js": "^11.11.1",
 		"isomorphic-dompurify": "^2.25.0",
 		"marked": "^15.0.12",
-		"marked-highlight": "^2.2.1"
+		"marked-highlight": "^2.2.1",
+		"octokit": "^5.0.3"
 	}
 }

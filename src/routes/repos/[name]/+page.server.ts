@@ -3,17 +3,10 @@ import { error } from '@sveltejs/kit';
 import type { EntryGenerator } from './$types';
 import { includedRepoNames } from '$lib';
 
+import { Octokit } from 'octokit';
+
 type GithubContent = {
 	sha: string;
-};
-
-type GithubTree = {
-	url: string;
-	tree: {
-		path: string;
-		sha: string;
-		type: 'blob' | 'tree';
-	}[];
 };
 
 export type MappedTree = { [key: string]: MappedTree | null };
@@ -28,41 +21,28 @@ export const entries: EntryGenerator = () => {
 
 export async function load({ params }: { params: { name: string } }) {
 	try {
-		const response = await fetch(
-			`https://api.github.com/repos/bellshade/${params.name}/contents/`,
-			{
-				headers: {
-					Accept: 'application/vnd.github.object+json',
-					Authorization: `Bearer ${GITHUB_API_TOKEN}`
-				}
+		const octokit = new Octokit({
+			auth: GITHUB_API_TOKEN
+		});
+		const response = await octokit.rest.repos.getContent({
+			owner: "bellshade",
+			repo: params.name,
+			path: "",
+			mediaType: {
+				format: "object"
 			}
-		);
-		const json: GithubContent = await response.json();
+		});
+		const data = response.data as GithubContent;
+		
+		const treeResponse = await octokit.rest.git.getTree({
+			owner: "bellshade",
+			repo: params.name,
+			tree_sha: data.sha,
+			recursive: "1"
+		});
+		const treeData = treeResponse.data;
 
-		if (!response.ok && 'message' in json) {
-			throw new Error(
-				`Error: GitHub API returned status code ${response.status} with message: ${json.message}`
-			);
-		}
-
-		const treeResponse = await fetch(
-			`https://api.github.com/repos/bellshade/${params.name}/git/trees/${json.sha}?recursive=1`,
-			{
-				headers: {
-					Accept: 'application/vnd.github+json',
-					Authorization: `Bearer ${GITHUB_API_TOKEN}`
-				}
-			}
-		);
-		const treeJson: GithubTree = await treeResponse.json();
-
-		if (!treeResponse.ok && 'message' in treeJson) {
-			throw new Error(
-				`Error: GitHub API returned status code ${treeResponse.status} with message: ${treeJson.message}`
-			);
-		}
-
-		const reducedNestedTree = treeJson.tree.reduce((reduced, current) => {
+		const reducedNestedTree = treeData.tree.reduce((reduced, current) => {
 			const split = current.path.split('/');
 
 			const prevs = split.slice(0, -1);
