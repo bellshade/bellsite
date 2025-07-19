@@ -31,6 +31,10 @@
 	};
 </script>
 
+<svelte:head>
+	<title>Bellshade - Materi</title>
+</svelte:head>
+
 <div>
 	<div
 		class="mx-auto grid max-w-screen-xl grid-cols-1 gap-6 px-5 py-24 md:grid-cols-2 lg:grid-cols-3"

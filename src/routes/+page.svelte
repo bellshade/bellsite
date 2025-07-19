@@ -31,6 +31,10 @@
 	});
 </script>
 
+<svelte:head>
+	<title>Bellshade</title>
+</svelte:head>
+
 <div class="relative h-100 overflow-hidden">
 	<img src="/cover.svg" alt="Bellshade Logo" class="absolute size-full object-cover" />
 	<div

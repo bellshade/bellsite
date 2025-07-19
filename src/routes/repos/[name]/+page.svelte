@@ -112,6 +112,10 @@
 	});
 </script>
 
+<svelte:head>
+	<title>Bellshade - Materi - {data.repoName}</title>
+</svelte:head>
+
 <div class="mx-auto mt-25 flex max-w-screen-lg flex-col gap-x-4 px-4 md:flex-row">
 	<div
 		class={[

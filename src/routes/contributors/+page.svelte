@@ -38,6 +38,10 @@
 	}
 </script>
 
+<svelte:head>
+	<title>Bellshade - Tim</title>
+</svelte:head>
+
 <div
 	class="mx-auto grid max-w-screen-xl grid-cols-1 gap-4 px-4 py-24 md:grid-cols-2 lg:grid-cols-3"
 >
