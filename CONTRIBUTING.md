@@ -28,6 +28,10 @@ Jika anda menemukan _bug_ pada website ini, silahkan ajukan issue anda dengan:
 - sertakan label yang sudah disediakan (_bug_, _invalid_, _error_),
 - lampirkan tangkapan layar ketika menemukan _bug_.
 
+### 3. Jenis kontribusi lain
+
+Jika ada jenis kontribusi lain misalnya dokumentasi, refactor, dan lainnya, sesuaikan saja awalan issue, misalnya "\[DOCS\]" atau "\[REFACTOR\]".
+
 ## Aturan _Pull Request_
 
 1. _Pull request_ yang dijalankan harus lolos proses _build_, dalam kata lain, jalankan `npm run build` sekali sebelum
