@@ -20,7 +20,7 @@
 	const marked = new Marked(
 		markedHighlight({
 			async: false,
-			highlight: (code, lang, info) => {
+			highlight: (code, lang) => {
 				const language = hljs.getLanguage(lang) ? lang : 'plaintext';
 				return hljs.highlight(code, { language }).value;
 			}
@@ -103,5 +103,7 @@
 		className
 	]}
 >
+	<!-- Make sure the html content is sanitized -->
+	<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 	{@html htmlContent}
 </div>

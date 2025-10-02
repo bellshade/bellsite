@@ -99,7 +99,7 @@
 		<p class="col-span-full border-b border-gray-200 pb-6 text-center text-lg dark:text-gray-300">
 			Projek yang dibuat oleh team dan contributor Bellshade
 		</p>
-		{#each projects as project}
+		{#each projects as project (project.name)}
 			<div
 				class="flex flex-col justify-between gap-y-4 rounded-lg border border-zinc-300 p-4 transition-colors hover:bg-zinc-100 dark:border-zinc-700 dark:hover:bg-gray-800"
 			>
@@ -124,7 +124,7 @@
 					</p>
 				</div>
 				<div class="flex flex-col gap-2">
-					{#each Object.entries(project.links) as [label, link]}
+					{#each Object.entries(project.links) as [label, link] (link.url)}
 						<div class="flex flex-col gap-2">
 							<a
 								href={link.url}

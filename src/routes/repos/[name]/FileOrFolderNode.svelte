@@ -22,7 +22,7 @@
 	if (!aIsFolder && bIsFolder) return 1; // Files last
 
 	return a.localeCompare(b);
-}) as key}
+}) as key (key)}
 	{@const isFolder = node[key] !== null}
 	<div style="padding-left: {path.length * 1}rem" class="text-sm dark:bg-gray-700">
 		<button

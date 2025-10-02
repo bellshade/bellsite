@@ -1,8 +1,9 @@
 <script lang="ts">
 	import Markdown from '$lib/components/Markdown.svelte';
+	import { SvelteMap } from 'svelte/reactivity';
 	import type { GithubMember } from './+page.server';
 
-	const map = new Map<string, string>();
+	const map = new SvelteMap<string, string>();
 
 	const { data } = $props();
 	let modalOpen: string | null = $state(null);
@@ -49,7 +50,7 @@
 		Kenalan yuk sama Team Bellshade!
 	</h1>
 	{#if data.members.length > 0 || data.outsideCollaborators.length > 0}
-		{#each [...data.members, ...data.outsideCollaborators] as contributor}
+		{#each [...data.members, ...data.outsideCollaborators] as contributor (contributor.html_url)}
 			<div class="flex flex-row items-center justify-center">
 				<button
 					onclick={(e) => handleOpenModal(e, contributor)}

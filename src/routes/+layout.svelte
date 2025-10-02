@@ -27,7 +27,7 @@
 	let isHamburgerOpen = $state(false);
 
 	$effect(() => {
-		if (typeof document !== undefined) {
+		if (typeof document !== 'undefined') {
 			document.documentElement.classList.toggle('dark', isDarkMode.toggled);
 		}
 	});
@@ -44,7 +44,7 @@
 			>
 		</div>
 		<ul class="flex flex-row items-center space-x-4 whitespace-nowrap">
-			{#each mainLinks as link}
+			{#each mainLinks as link (link.href)}
 				<li class="relative hidden sm:block">
 					<a
 						href={link.href}
@@ -79,14 +79,14 @@
 					]}
 				>
 					<li class="p-1">
-						{#each mainLinks as link}
+						{#each mainLinks as link (link.href)}
 							<a
 								href={link.href}
 								class="block rounded px-4 py-2 text-gray-800 hover:bg-gray-100 sm:hidden dark:text-gray-300 dark:hover:bg-gray-700"
 								onclick={() => (isHamburgerOpen = false)}>{link.name}</a
 							>
 						{/each}
-						{#each lainnyaLinks as link}
+						{#each lainnyaLinks as link (link.href)}
 							<a
 								href={link.href}
 								target="_blank"

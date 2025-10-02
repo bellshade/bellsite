@@ -45,7 +45,7 @@
 		<p class="col-span-full border-b border-gray-200 pb-6 text-center text-lg dark:text-gray-300">
 			Tempat belajar yang dibuat oleh team dan contributor Bellshade
 		</p>
-		{#each data.repos as repo}
+		{#each data.repos as repo (repo.html_url)}
 			<div
 				class="group flex flex-col gap-y-4 rounded-lg border border-zinc-300 bg-white p-4 transition-colors hover:bg-zinc-100 dark:border-gray-600 dark:bg-gray-900 dark:hover:bg-gray-800"
 			>
