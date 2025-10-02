@@ -31,6 +31,17 @@ Lakukan command berikut untuk menginstall dependencies:
 npm install
 ```
 
+## Setup environment variable
+
+Hanya satu _environment variable_ yang digunakan dalam projek ini, yaitu `GITHUB_API_TOKEN`, yang berisi token yang mempunyai akses _read-only_ terhadap member organisasi Bellshade.  
+Jika kalian tidak mengubah halaman `/contributors`, _environment variable_ ini tidak diperlukan.
+
+```
+GITHUB_API_TOKEN=
+```
+
+![GitHub API Token Perms](docs/github_api_token_perms.png)
+
 ## Jalankan di local development
 
 Untuk menjalankan local development di browser, lakukan command berikut:
