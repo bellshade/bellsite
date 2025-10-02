@@ -8,7 +8,7 @@ Kontribusi kalian yang akan membantu WPU menjadi Komunitas ngoding paling _wawaw
 
 Ada 2 jenis kontribusi yang dapat dilakukan:
 
-1. Kontribusi Fitur
+### 1. Kontribusi Fitur
 
 Untuk menambahkan/memperbagus fitur, silakan kunjungi tab "Projects", buka project [Bellsite - To-do List](https://github.com/orgs/bellshade/projects/16/views/1) untuk melihat daftar fitur yang bisa ditambahkan.  
 Jika ingin menambahkan fitur baru, silakan dulu "Add item" -> "Create new issue" untuk menjelaskan fitur apa yang ingin ditambah dengan awalan "\[FEATURE\]". Silakan menambahkan label yang relevan juga.  
@@ -18,7 +18,7 @@ Kemudian lakukan _pull request_ dan sertakan link refensi ke issue yang Anda bua
 ![Projects Tab - Issue Title](docs/projects_tab_2.png)
 ![Projects Tab - Issue Labels](docs/projects_tab_3.png)
 
-2. Kontribusi Bugfix
+### 2. Kontribusi Bugfix
 
 Untuk bugfix, silakan gunakan prosedur yang sama dengan prosedur di atas, namun saat membuat issue, gunakan awalan "\[BUG\]".
 
