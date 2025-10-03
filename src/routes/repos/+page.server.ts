@@ -25,7 +25,6 @@ export async function load() {
 
 		const data: GithubRepo[] = response.data;
 
-
 		return {
 			repos: data.filter((repo) => includedRepoNames.includes(repo.name))
 		};

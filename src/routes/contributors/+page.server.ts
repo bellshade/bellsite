@@ -1,7 +1,7 @@
 import { error } from '@sveltejs/kit';
 import { GITHUB_API_TOKEN } from '$env/static/private';
 
-import { Octokit } from "octokit";
+import { Octokit } from 'octokit';
 
 export type GithubMember = {
 	login: string;
@@ -24,10 +24,10 @@ export async function load() {
 		});
 		const [membersResponse, outsideCollaboratorsResponse] = await Promise.all([
 			octokit.rest.orgs.listPublicMembers({
-				org: "bellshade"
+				org: 'bellshade'
 			}),
 			octokit.rest.orgs.listOutsideCollaborators({
-				org: "bellshade"
+				org: 'bellshade'
 			})
 		]);
 		const members: GithubMember[] = membersResponse.data;
