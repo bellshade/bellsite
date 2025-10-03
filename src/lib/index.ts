@@ -24,17 +24,17 @@ export const includedRepoNames = [
 
 export const resolve = (...paths: string[]) => {
 	return paths.reduce((p, c) => {
-		const pSplit = p.split("/");
-		const cSplit = c.split("/");
+		const pSplit = p.split('/');
+		const cSplit = c.split('/');
 
 		for (const part of cSplit) {
-			if (part == "..") {
+			if (part == '..') {
 				pSplit.pop();
-			} else if (part != "." && part != "") {
-				 pSplit.push(part);
+			} else if (part != '.' && part != '') {
+				pSplit.push(part);
 			}
 		}
 
-		return pSplit.join("/");
+		return pSplit.join('/');
 	});
-}
+};

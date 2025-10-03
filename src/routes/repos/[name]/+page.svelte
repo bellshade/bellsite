@@ -40,11 +40,11 @@
 			return path;
 		}
 
-		const resolvedPath = resolve(base, "..", path);
+		const resolvedPath = resolve(base, '..', path);
 
 		let currentObject = data.contents;
 		const parts = resolvedPath.split('/');
-		const end = parts.pop() || "";
+		const end = parts.pop() || '';
 
 		if (parts[0] === '') {
 			parts.shift();
@@ -60,11 +60,13 @@
 
 		const [lastPart, ...idParts] = end.split('#');
 
-		const finalPath = parts.join("/") + (parts.length > 0 && lastPart ? '/' : '') + lastPart;
-		const id = idParts.length > 0 ? `#${idParts.join('#')}` : "";
+		const finalPath = parts.join('/') + (parts.length > 0 && lastPart ? '/' : '') + lastPart;
+		const id = idParts.length > 0 ? `#${idParts.join('#')}` : '';
 
-		return currentObject[lastPart] === null ? `?file=${finalPath}${id}` : `?file=${resolve(finalPath, "README.md")}${id}`;
-	}
+		return currentObject[lastPart] === null
+			? `?file=${finalPath}${id}`
+			: `?file=${resolve(finalPath, 'README.md')}${id}`;
+	};
 
 	const metadata = $derived.by(async () => {
 		if (!hasClientLoaded) {

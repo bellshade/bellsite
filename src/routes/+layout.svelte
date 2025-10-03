@@ -2,7 +2,9 @@
 	import {
 		ArrowTopRightOnSquareIcon,
 		Bars3Icon,
-		ChevronDownIcon
+		ChevronDownIcon,
+		EnvelopeIcon,
+		MapPinIcon
 	} from '@fvilers/heroicons-svelte/16/solid';
 	import { page } from '$app/state';
 	import '../app.css';
@@ -108,3 +110,40 @@
 </nav>
 
 {@render children()}
+
+<footer class="mx-auto max-w-screen-xl overflow-hidden px-5 xl:px-0">
+	<div class="relative mb-8 w-full rounded-2xl bg-[#27272a] p-10">
+		<div class="grid grid-cols-1 gap-8 text-white md:grid-cols-2 lg:grid-cols-5">
+			<div class="space-y-4 lg:col-span-2">
+				<h1 class="text-4xl font-bold">Bellshade</h1>
+				<p class="text-muted-foreground max-w-[24rem]">
+					Komunitas untuk mengelola dan menulis kode untuk proyek pendidikan sumber terbuka
+					Indonesia.
+				</p>
+				<div class="flex w-fit gap-2">
+					<EnvelopeIcon class="size-6 rounded-sm bg-white p-[2px] text-[#27272a]" />
+					<a href="mailto:bellshade@proton.me" class="decoration-2 hover:underline"
+						>bellshade@proton.me</a
+					>
+				</div>
+				<div class="flex w-fit gap-2">
+					<MapPinIcon class="size-6 rounded-sm bg-white p-[2px] text-[#27272a]" />
+					<span>Indonesia</span>
+				</div>
+			</div>
+			<div class="space-y-4">
+				<h3 class="text-lg font-semibold">Tautan Halaman</h3>
+				<nav class="flex w-fit flex-col space-y-2 text-base">
+					<a href="/repos" class="hover:underline"> Materi </a>
+					<a href="/current-projects" class="hover:underline"> Proyek </a>
+					<a href="/contributors" class="hover:underline"> Tim Bellshade </a>
+				</nav>
+			</div>
+		</div>
+		<img
+			src="/wpuputih.png"
+			alt="bellshade logo"
+			class="absolute -right-90 -bottom-80 h-auto w-[600px]"
+		/>
+	</div>
+</footer>

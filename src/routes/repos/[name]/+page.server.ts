@@ -25,20 +25,20 @@ export async function load({ params }: { params: { name: string } }) {
 			auth: GITHUB_API_TOKEN
 		});
 		const response = await octokit.rest.repos.getContent({
-			owner: "bellshade",
+			owner: 'bellshade',
 			repo: params.name,
-			path: "",
+			path: '',
 			mediaType: {
-				format: "object"
+				format: 'object'
 			}
 		});
 		const data = response.data as GithubContent;
-		
+
 		const treeResponse = await octokit.rest.git.getTree({
-			owner: "bellshade",
+			owner: 'bellshade',
 			repo: params.name,
 			tree_sha: data.sha,
-			recursive: "1"
+			recursive: '1'
 		});
 		const treeData = treeResponse.data;
 
