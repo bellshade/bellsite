@@ -10,6 +10,7 @@
 	import '../app.css';
 	import { isDarkMode } from '$lib/state/theme.svelte';
 	import DarkModeButton from '$lib/components/DarkModeButton.svelte';
+	import { onMount } from 'svelte';
 
 	const { children } = $props();
 
@@ -27,6 +28,20 @@
 	];
 
 	let isHamburgerOpen = $state(false);
+	// handle close hamburger when clicking anywhere outside the dom
+	function handleClickOutside(node: HTMLElement, callback: () => void) {
+		function handler(event: MouseEvent) {
+			if (!node.contains(event.target as Node)) {
+				callback();
+			}
+		}
+		document.addEventListener('click', handler, true);
+		return {
+			destroy() {
+				document.removeEventListener('click', handler, true);
+			}
+		};
+	}
 
 	$effect(() => {
 		if (typeof document !== 'undefined') {
@@ -58,6 +73,7 @@
 				</li>
 			{/each}
 			<li
+				use:handleClickOutside={() => (isHamburgerOpen = false)}
 				class={[
 					'group/dropdown relative rounded-lg px-2 py-1',
 					{ 'bg-gray-200 dark:bg-gray-900': isHamburgerOpen }
