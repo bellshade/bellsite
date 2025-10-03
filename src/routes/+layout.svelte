@@ -28,7 +28,6 @@
 	];
 
 	let isHamburgerOpen = $state(false);
-	let hamburgerRef: HTMLElement | null = null;
 	// handle close hamburger when clicking anywhere outside the dom
 	function handleClickOutside(node: HTMLElement, callback: () => void) {
 		function handler(event: MouseEvent) {
@@ -75,7 +74,6 @@
 			{/each}
 			<li
 				use:handleClickOutside={() => (isHamburgerOpen = false)}
-				bind:this={hamburgerRef}
 				class={[
 					'group/dropdown relative rounded-lg px-2 py-1',
 					{ 'bg-gray-200 dark:bg-gray-900': isHamburgerOpen }
