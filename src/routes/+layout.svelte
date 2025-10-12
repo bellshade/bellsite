@@ -128,7 +128,7 @@
 {@render children()}
 
 <footer class="mx-auto max-w-screen-xl overflow-hidden px-5 xl:px-0">
-	<div class="relative mb-8 w-full rounded-2xl bg-[#27272a] p-10">
+	<div class="relative overflow-hidden mb-8 w-full rounded-2xl bg-[#27272a] p-10">
 		<div class="grid grid-cols-1 gap-8 text-white md:grid-cols-2 lg:grid-cols-5">
 			<div class="space-y-4 lg:col-span-2">
 				<h1 class="text-4xl font-bold">Bellshade</h1>
@@ -159,7 +159,7 @@
 		<img
 			src="/wpuputih.png"
 			alt="bellshade logo"
-			class="absolute -right-90 -bottom-80 h-auto w-[600px]"
+			class="absolute -right-91 -bottom-80 h-auto w-[600px]"
 		/>
 	</div>
 </footer>
