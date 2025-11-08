@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { StarIcon } from '@fvilers/heroicons-svelte/16/solid';
+	import ContribList from './ContribList.svelte';
 
 	const { data } = $props();
 
@@ -65,6 +66,7 @@
 					<p class="relative z-100 text-sm dark:text-gray-300">
 						{repo.description ?? 'No description.'}
 					</p>
+					<ContribList contributors={repo.contributors} />
 				</div>
 				<div class="flex flex-col gap-2">
 					<a
